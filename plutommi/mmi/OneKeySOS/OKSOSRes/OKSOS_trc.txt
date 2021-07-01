@@ -1,0 +1,12 @@
+[APP NAME] = APP_OKSOS
+[SCOPE] = PLUTO
+[MODULE] = MOD_MMI_COMMON_APP
+
+#start trace
+TRC_MSG(TRC_MMI_OKSOS_EVT_HD, "[OKSOS] mmi_oksos_main_evt_hdlr, type:%d")
+TRC_MSG(TRC_MMI_OKSOS_SYNC_CB, "[OKSOS] sync cb, start_index:%d, num_item:%d, count:%d")
+TRC_MSG(TRC_MMI_OKSOS_SYNC_IDX, "[OKSOS] index[%d]:%d")
+TRC_MSG(TRC_MMI_OKSOS_SYNC_NUM, "[OKSOS] num_len:%d, %d%d%d")
+TRC_MSG(TRC_MMI_OKSOS_LIST_SHOW, "[OKSOS] mmi_oksos_list_show, count:%d")
+TRC_MSG(TRC_MMI_OKSOS_LAUNCH, "[OKSOS] mmi_oksos_launch, key_ret:%d")
+TRC_MSG(TRC_MMI_OKSOS_LONG_CB, "[OKSOS] mmi_oksos_dial_long_press_handler, key:%d")

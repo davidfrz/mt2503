@@ -1,0 +1,14 @@
+[APP NAME] = TIPAPP
+[SCOPE] = PLUTO
+[MODULE] = MOD_MMI_CONN_APP
+
+#start trace
+
+TRC_MSG(TRC_BLE_TIP_REGISTER,     "[BLE_TIPAPP]client_regiter") 
+TRC_MSG(TRC_BLE_TIP_UPDATE_TIME,     "[BLE_TIPAPP]update_time") 
+TRC_MSG(TRC_BLE_TIP_DEREGISTER,     "[BLE_TIPAPP]client_deregiter")
+
+TRC_MSG(TRC_BLE_TIP_REGISTER_CB,     "[BLE_TIPAPP]register_cb, status =[%d]")
+TRC_MSG(TRC_BLE_TIP_TIME_INFO,     "[BLE_TIPAPP]time_info_cb, status =[%d]")
+TRC_MSG(TRC_BLE_TIP_DEREGISTER_CB,     "[BLE_TIPAPP]deregister_cb, status =[%d]")
+

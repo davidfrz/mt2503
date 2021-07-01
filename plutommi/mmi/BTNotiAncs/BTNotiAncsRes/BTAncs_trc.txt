@@ -1,0 +1,10 @@
+[APP NAME] = APP_ANCS
+[SCOPE] = PLUTO
+[MODULE] = MOD_MMI_CONN_APP
+
+#start trace
+TRC_MSG(TRC_MMI_ANCS_EVT_HD, "[ANCS] mmi_bt_ancs_evt_hdlr, evt_id:%d, ind_type:%d")
+TRC_MSG(TRC_MMI_ANCS_EVT_HD_UCM, "[ANCS] mmi_bt_ancs_evt_hdlr, UCM show, ind_type:%d")
+TRC_MSG(TRC_MMI_ANCS_POP_SHOW, "[ANCS] mmi_bt_ancs_notify_popup_show, noti_id:%d")
+TRC_MSG(TRC_MMI_ANCS_DETAIL_SHOW, "[ANCS] mmi_bt_ancs_notify_details_show, hilit_nid:%d")
+TRC_MSG(TRC_MMI_ANCS_LIST_SHOW, "[ANCS] mmi_bt_ancs_notify_list_show")

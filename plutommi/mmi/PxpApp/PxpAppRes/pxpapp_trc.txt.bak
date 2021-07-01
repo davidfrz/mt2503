@@ -1,0 +1,19 @@
+[APP NAME] = PXPAPP
+[SCOPE] = PLUTO
+[MODULE] = MOD_MMI_CONN_APP
+
+#starttrace
+
+TRC_MSG(TRC_BLE_PXPAPP_SWITCH_PROC,     "[BLE_PXPAPP]bt_switch_proc, event =[%d],enum=[%d]") 
+TRC_MSG(TRC_BLE_PXPAPP_SWITCH_INIT,     "[BLE_PXPAPP]mmi_bt_power_on_to_init()")
+TRC_MSG(TRC_BLE_PXPAPP_SWITCH_DEINIT,     "[BLE_PXPAPP]mmi_bt_power_on_to_deinit()")  
+TRC_MSG(TRC_BLE_PXPAPP_CONFIG_LEVEL,      "[BLE_PXPAPP]config_cb, bdaddr =[%d],alert_level=[%d]")
+TRC_MSG(TRC_BLE_PXPAPP_CONFIG_ALERT,     "[BLE_PXPAPP]mmi_pxpapp_lls_config_alert()")
+TRC_MSG(TRC_BLE_PXPAPP_CONNECT_CB,      "[BLE_PXPAPP]connect_cb, bdaddr =[%d],connect_state=[%d]")
+TRC_MSG(TRC_BLE_PXPAPP_ALERT_CB,      "[BLE_PXPAPP]alert_cb, bdaddr =[%d],alert_level=[%d]")
+TRC_MSG(TRC_BLE_PXPAPP_ENTER_POPUP,     "[BLE_PXPAPP]mmi_pxpapp_launch_enter_popup()")
+TRC_MSG(TRC_BLE_PXPAPP_CLOSE_POPUP,     "[BLE_PXPAPP]mmi_pxpapp_grp_proc()")
+
+TRC_MSG(TRC_BLE_PXPAPP_CREATE_CNTX,     "[BLE_PXPAPP]mmi_pxpapp_create_cntx()")
+TRC_MSG(TRC_BLE_PXPAPP_FREE_CNTX,     "[BLE_PXPAPP]mmi_pxpapp_free_cntx()")
+TRC_MSG(TRC_BLE_PXPAPP_ALERT_SHOW,      "[BLE_PXPAPP]alert, str_id =[%d],g_pxp_cntx_p->image_id=[%d]")

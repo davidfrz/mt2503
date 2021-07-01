@@ -1,0 +1,1226 @@
+/*****************************************************************************
+*  Copyright Statement:
+*  --------------------
+*  This software is protected by Copyright and the information contained
+*  herein is confidential. The software may not be copied and the information
+*  contained herein may not be used or disclosed except with the written
+*  permission of MediaTek Inc. (C) 2010
+*
+*  BY OPENING THIS FILE, BUYER HEREBY UNEQUIVOCALLY ACKNOWLEDGES AND AGREES
+*  THAT THE SOFTWARE/FIRMWARE AND ITS DOCUMENTATIONS ("MEDIATEK SOFTWARE")
+*  RECEIVED FROM MEDIATEK AND/OR ITS REPRESENTATIVES ARE PROVIDED TO BUYER ON
+*  AN "AS-IS" BASIS ONLY. MEDIATEK EXPRESSLY DISCLAIMS ANY AND ALL WARRANTIES,
+*  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+*  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NONINFRINGEMENT.
+*  NEITHER DOES MEDIATEK PROVIDE ANY WARRANTY WHATSOEVER WITH RESPECT TO THE
+*  SOFTWARE OF ANY THIRD PARTY WHICH MAY BE USED BY, INCORPORATED IN, OR
+*  SUPPLIED WITH THE MEDIATEK SOFTWARE, AND BUYER AGREES TO LOOK ONLY TO SUCH
+*  THIRD PARTY FOR ANY WARRANTY CLAIM RELATING THERETO. MEDIATEK SHALL ALSO
+*  NOT BE RESPONSIBLE FOR ANY MEDIATEK SOFTWARE RELEASES MADE TO BUYER'S
+*  SPECIFICATION OR TO CONFORM TO A PARTICULAR STANDARD OR OPEN FORUM.
+*
+*  BUYER'S SOLE AND EXCLUSIVE REMEDY AND MEDIATEK'S ENTIRE AND CUMULATIVE
+*  LIABILITY WITH RESPECT TO THE MEDIATEK SOFTWARE RELEASED HEREUNDER WILL BE,
+*  AT MEDIATEK'S OPTION, TO REVISE OR REPLACE THE MEDIATEK SOFTWARE AT ISSUE,
+*  OR REFUND ANY SOFTWARE LICENSE FEES OR SERVICE CHARGE PAID BY BUYER TO
+*  MEDIATEK FOR SUCH MEDIATEK SOFTWARE AT ISSUE.
+*
+*  THE TRANSACTION CONTEMPLATED HEREUNDER SHALL BE CONSTRUED IN ACCORDANCE
+*  WITH THE LAWS OF THE STATE OF CALIFORNIA, USA, EXCLUDING ITS CONFLICT OF
+*  LAWS PRINCIPLES.  ANY DISPUTES, CONTROVERSIES OR CLAIMS ARISING THEREOF AND
+*  RELATED THERETO SHALL BE SETTLED BY ARBITRATION IN SAN FRANCISCO, CA, UNDER
+*  THE RULES OF THE INTERNATIONAL CHAMBER OF COMMERCE (ICC).
+*
+*****************************************************************************/
+/*****************************************************************************
+ *
+ * Filename:
+ * ---------
+ *  FmpAppMain.c
+ *
+ * Project:
+ * --------
+ *  MAUI
+ *
+ * Description:
+ * ------------
+ *  This file implements the fmp application.
+ *
+ * Author:
+ * -------
+ *  Hongjian Zhao (mtk54439)
+ *
+ *============================================================================
+ *             HISTORY
+ * Below this line, this part is controlled by PVCS VM. DO NOT MODIFY!!
+ *------------------------------------------------------------------------------
+ * $Log$
+ *
+ * 05 05 2014 hongjian.zhao
+ * [MAUI_03494006] [Wear_0425Demo] There is no "Find me" function
+ * check in for Pxpapp feature change.
+ *
+ * 04 24 2014 hongjian.zhao
+ * [MAUI_03494006] [Wear_0425Demo] There is no "Find me" function
+ * add for screen flow error.
+ *
+ * 04 24 2014 hongjian.zhao
+ * [MAUI_03494006] [Wear_0425Demo] There is no "Find me" function
+ * change for FMPL .
+ *
+ * 04 23 2014 hongjian.zhao
+ * [MAUI_03494006] [Wear_0425Demo] There is no "Find me" function
+ * add for server change and ctrl buffer change.
+ *
+ *
+ *------------------------------------------------------------------------------
+ * Upper this line, this part is controlled by PVCS VM. DO NOT MODIFY!!
+ *============================================================================
+ ****************************************************************************/
+
+/****************************************************************************
+ * Include
+ ****************************************************************************/
+#include "MMI_features.h"
+#include "MMIDataType.h"
+
+				  
+#ifdef __MMI_BLE_ANP_SUPPORT__
+
+#include "AnpAppGprot.h"
+#include "AnpAppProt.h"
+#include "AnpAppMain.h"
+#include "mmi_rp_app_anpapp_def.h"
+#include "AnpcSrv.h"
+#include "BtcmSrvGprot.h"
+#include "GpioSrvGprot.h"
+#include "wgui_softkeys.h"
+#include "ProfilesSrvGprot.h"
+#include "mmi_rp_srv_prof_def.h"
+#include "CommonScreens.h"
+#include "MMI_conn_app_trc.h"
+#include "TouchScreenGprot_Int.h"
+
+
+#include "MMI_common_app_trc.h"
+#include "kal_general_types.h"
+#include "Unicodexdcl.h"
+#include "kal_public_api.h"
+#include "DebugInitDef_Int.h"
+#include "GlobalResDef.h"
+#include "mmi_frm_scenario_gprot.h"
+#include "AlertScreen.h"
+#include "wgui_categories_util.h"
+#include "mmi_frm_events_gprot.h"
+#include "BootupSrvGprot.h"
+#include "IdleGprot.h"
+#include "gui_effect_oem.h"
+
+
+
+/****************************************************************************
+ * Global and define
+ ****************************************************************************/
+ 
+/* Time interval to expiry and show finding stop screen in FMPAPP. */
+#define CATEGORY_BIT_SIMPLE_ALERT          0x0001
+#define CATEGORY_BIT_EMAIL          0x0002
+#define CATEGORY_BIT_NEWS          0x0004
+#define CATEGORY_BIT_CALL          0x0008
+#define CATEGORY_BIT_MISSED_CALL        0x0010
+#define CATEGORY_BIT_SMS_MMS          0x0020
+#define CATEGORY_BIT_VOICE_MAIL          0x0040
+#define CATEGORY_BIT_SCHEDULE         0x0080
+#define CATEGORY_BIT_HIGH_PRIORITIZED_ALERT          0x0100
+#define CATEGORY_BIT_INSTANT_MESSAGE         0x0200
+
+
+
+#define CATEGORY_ID_SIMPLE_ALERT 0x00
+#define CATEGORY_ID_EMAIL        0x01
+#define CATEGORY_ID_NEWS         0x02
+#define CATEGORY_ID_CALL         0x03
+#define CATEGORY_ID_MISSED_CALL  0x04
+#define CATEGORY_ID_SMS_MMS      0x05
+#define CATEGORY_ID_VOICE_MAIL   0x06
+#define CATEGORY_ID_SCHEDULE     0x07
+#define CATEGORY_ID_HIGH_PRIORITIZED_ALERT 0x08
+#define CATEGORY_ID_INSTANT_MESSAGE 0x09
+
+
+#define ANPC_ALERT_ON                          0x01
+#define ANPC_ALERT_OFF                         0x00
+
+
+
+kal_uint8 anpc_alert_info[ANP_MAX_INFO_LENGTH];
+kal_uint8 anpc_alert_num;
+
+U32 anpc_str_id = 0;
+WCHAR popup_str[50] = {0};
+kal_uint8 base_alert_info[ANP_MAX_INFO_LENGTH] = {0};
+U8 new_message_flag = 0;
+U8 unread_message_flag = 0;
+BD_ADDR *anpc_addr;
+
+
+/*****************************************************************************
+ * FUNCTION
+ *  mmi_anpapp_client_init
+ * DESCRIPTION
+ *  to initial app client role
+ * PARAMETERS
+ *  void
+ * RETURNS
+ *  void
+ *****************************************************************************/
+void mmi_anpapp_client_init(void)
+{
+	/*----------------------------------------------------------------*/
+	/* Local Variables												  */
+	/*----------------------------------------------------------------*/
+	U32 event_mask;
+	/*----------------------------------------------------------------*/
+	/* Code Body													  */
+	/*----------------------------------------------------------------*/	
+	MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_CLIENT_INIT);
+	event_mask = SRV_BT_CM_EVENT_ACTIVATE |
+				 SRV_BT_CM_EVENT_DEACTIVATE;
+	srv_bt_cm_set_notify((srv_bt_cm_notifier)mmi_bt_event_notify_anpapp_client, event_mask, NULL);
+	return; 
+}
+
+
+/*****************************************************************************
+ * FUNCTION
+ *  mmi_bt_event_notify_anpapp_client
+ * DESCRIPTION
+ *  This function is to received service event
+ * PARAMETERS
+ *  void
+ *
+ *
+ * RETURNS
+ *  void
+ *****************************************************************************/
+void mmi_bt_event_notify_anpapp_client(U32 event, void* para)
+{
+    /*----------------------------------------------------------------*/
+    /* Local Variables                                                */
+    /*----------------------------------------------------------------*/
+
+    /*----------------------------------------------------------------*/
+    /* Code Body                                                      */
+    /*----------------------------------------------------------------*/
+    switch (event)
+    {
+        case SRV_BT_CM_EVENT_ACTIVATE:
+            mmi_bt_power_on_init_anpc();
+            break;
+
+        case SRV_BT_CM_EVENT_DEACTIVATE:
+            mmi_bt_power_on_deinit_anpc();
+            break;
+
+		default :
+			break;
+	}
+}
+
+/*****************************************************************************
+ * FUNCTION
+ *  mmi_anpapp_launch_enter_popup
+ * DESCRIPTION
+ *  launch point of anpapp
+ * PARAMETERS
+ *  void
+ * RETURNS
+ *  void
+ *****************************************************************************/
+void mmi_anpapp_launch_enter_popup(void)
+{
+    /*----------------------------------------------------------------*/
+    /* Local Variables                                                */
+    /*----------------------------------------------------------------*/
+	mmi_id grp_id;
+
+    /*----------------------------------------------------------------*/
+    /* Code Body                                                      */
+    /*----------------------------------------------------------------*/
+    //MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_ENTER_POPUP);
+	grp_id = mmi_frm_group_create(
+				GRP_ID_ROOT,
+				GRP_ID_ANPAPP_MAIN,
+				mmi_anpapp_grp_proc,
+				NULL);
+	mmi_frm_group_enter(grp_id,MMI_FRM_NODE_SMART_CLOSE_FLAG);
+    mmi_anpapp_entry_notification_screen();
+}
+/*****************************************************************************
+ * FUNCTION
+ *  mmi_anpapp_grp_proc
+ * DESCRIPTION
+ *  
+ * PARAMETERS
+ *  void
+ * RETURNS
+ *  
+ *****************************************************************************/
+MMI_RET mmi_anpapp_grp_proc(mmi_event_struct *evt)
+{
+    /*----------------------------------------------------------------*/
+    /* Local Variables                                                */
+    /*----------------------------------------------------------------*/
+
+    /*----------------------------------------------------------------*/
+    /* Code Body                                                      */
+    /*----------------------------------------------------------------*/
+	switch (evt->evt_id)
+	{
+		case EVT_ID_GROUP_DEINIT:
+		{
+			//mmi_pxpapp_free_cntx();
+			//MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_CLOSE_POPUP);
+			mmi_frm_group_close(GRP_ID_ANPAPP_MAIN);
+		}
+			break;
+		default:
+			break;
+
+	}
+	return MMI_OK;
+
+}
+
+/*****************************************************************************
+ * FUNCTION
+ *  mmi_pxpapp_exit_notification_screen
+ * DESCRIPTION
+ *  Disapear notification popup and play alarm tone when LLS or ALS come.
+ * PARAMETERS
+ *  void
+ * RETURNS
+ *  void
+ *****************************************************************************/
+void mmi_anpapp_exit_notification_screen(void)
+{
+    /*----------------------------------------------------------------*/
+    /* Local Variables                                                */
+    /*----------------------------------------------------------------*/
+
+    /*----------------------------------------------------------------*/
+    /* Code Body                                                      */
+    /*----------------------------------------------------------------*/
+	/*stop alarm ring*/
+	srv_prof_stop_tone(SRV_PROF_TONE_ALARM);
+	srv_vibrator_off();
+    srv_backlight_turn_off();
+
+	//g_pxpapp_cntx.is_popuping = MMI_FALSE;
+	mmi_frm_scrn_close(GRP_ID_ANPAPP_MAIN,SCR_ID_ANPAPP_SHOW); 
+
+}
+
+/*****************************************************************************
+ * FUNCTION
+ *  mmi_pxpapp_alert_sreen_show
+ * DESCRIPTION
+ *  to draw screen of  alert
+ * PARAMETERS
+ *  [evt]
+ * RETURNS
+ *  void
+ *****************************************************************************/
+void mmi_anpapp_alert_sreen_show(void)
+{
+	/*----------------------------------------------------------------*/
+	/* Local Variables												  */
+	/*----------------------------------------------------------------*/
+	wgui_showcategory6333_screen(NULL,
+								(UI_string_type)GetString(STR_ID_ANP_VIEW),
+								(UI_string_type)GetString(STR_ID_ANP_DISMISS),
+								(UI_string_type)popup_str,
+								NULL);
+	
+    SetLeftSoftkeyFunction(mmi_anpapp_exit_notification_screen, KEY_EVENT_UP);
+    SetRightSoftkeyFunction(mmi_anpapp_exit_notification_screen,KEYBOARD_KEY_UP);
+}
+
+/*****************************************************************************
+ * FUNCTION
+ *  mmi_anpapp_entry_notification_screen
+ * DESCRIPTION
+ *  Display notification popup 
+ * PARAMETERS
+ *  void
+ * RETURNS
+ *  void
+ *****************************************************************************/
+void mmi_anpapp_entry_notification_screen(void)
+{
+    /*----------------------------------------------------------------*/
+    /* Local Variables                                                */
+    /*----------------------------------------------------------------*/
+
+    /*----------------------------------------------------------------*/
+    /* Code Body                                                      */
+    /*----------------------------------------------------------------*/    
+	if (!mmi_frm_scrn_enter(
+             GRP_ID_ANPAPP_MAIN, 
+             SCR_ID_ANPAPP_SHOW, 
+             mmi_pxpapp_exit_notification_screen, 
+             (FuncPtr)mmi_anpapp_exit_notification_screen, 
+             MMI_FRM_FULL_SCRN))
+    {
+    	return;
+    }
+	mmi_anpapp_alert_sreen_show();
+#if 0
+#ifdef __MMI_TOUCH_SCREEN__
+	mmi_pen_register_down_handler(mmi_pxpapp_pen_empty_hdlr);
+	mmi_pen_register_up_handler(mmi_pxpapp_pen_up_hdlr);
+	mmi_pen_register_move_handler(mmi_pxpapp_pen_empty_hdlr);
+	mmi_pen_register_abort_handler(mmi_pxpapp_pen_empty_hdlr);	  
+	mmi_pen_register_repeat_handler(mmi_pxpapp_pen_empty_hdlr);
+	mmi_pen_register_long_tap_handler(mmi_pxpapp_pen_empty_hdlr);
+#endif /* __MMI_TOUCH_SCREEN__ */
+#endif
+    SetKeyHandler(mmi_anpapp_exit_notification_screen, KEY_END, KEY_EVENT_UP);
+    SetKeyHandler(mmi_anpapp_exit_notification_screen, KEY_BACK, KEY_EVENT_UP);
+
+	/*beep and vibration*/
+	srv_prof_play_tone_with_id(SRV_PROF_TONE_ALARM, 
+							AUD_ID_PROF_RING1, 
+						    SRV_PROF_RING_TYPE_REPEAT, 
+							NULL);
+	//srv_vibrator_on();
+	srv_vibrator_on();
+
+
+}
+
+#if 0
+/*****************************************************************************
+ * FUNCTION
+ *  mmi_anpapp_check_free_index
+ * DESCRIPTION
+ *  This function is to rigister anp profile CBs
+ * PARAMETERS
+ *  void
+ *
+ *
+ * RETURNS
+ *  void
+ *****************************************************************************/
+BOOL mmi_anpapp_check_index(kal_uint8 *array_in)
+{
+    U8 idx;
+
+    for (idx = 0; idx < ANP_MAX_INFO_LENGTH; idx++)
+    {
+        if (array_in[idx] != 0)
+        {
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+#endif
+/*****************************************************************************
+ * FUNCTION
+ *  mmi_anpapp_client_cb
+ * DESCRIPTION
+ *  This function is to rigister anp profile CBs
+ * PARAMETERS
+ *  void
+ *
+ *
+ * RETURNS
+ *  void
+ *****************************************************************************/
+static void mmi_anpapp_client_cb(anp_client_app_cb_param* param)
+{
+    switch (param->evtid)
+    {
+		case ANPC_MMI_EVT_ENABLE_CNF:
+		{
+			MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_ENABLE_CNF,param->result);
+	        if (param->result == OS_ANPC_STATUS_SUCCESS)
+	        {
+				srv_anp_client_listen(TRUE); 
+			}
+			else
+			{
+				/*error popup*/
+				//mmi_popup_display();
+			}
+		}
+			break;
+		case ANPC_MMI_EVT_CONNEC_IND:
+		{
+			MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_CNNC_CNF,param->result);
+	        if (param->result == OS_ANPC_STATUS_SUCCESS)
+	        {
+	            srv_anp_client_listen(FALSE);
+	        	/* note the addr*/
+				if (anpc_addr == NULL)
+				{
+					anpc_addr = (BD_ADDR *)OslMalloc(sizeof(BD_ADDR));
+				}
+				memset(anpc_addr, 0x0, sizeof(BD_ADDR));
+				memcpy(anpc_addr, &param->bdaddr, sizeof(BD_ADDR));
+				/*to write the control point cmd*/
+				srv_anp_client_read_supported_new_alert_category_req(anpc_addr);
+			}
+			else
+			{
+	            /*show error popup*/
+				//mmi_popup_display();
+			}
+		}
+			break;
+		case ANPC_MMI_EVT_DISCONNECT_IND:
+		{
+            if (anpc_addr)
+            {
+				OslMfree(anpc_addr);
+				anpc_addr = NULL;
+			}
+
+		}
+			break;
+		case ANPC_MMI_EVT_LISTEN_RESULT:
+		{
+			switch (param->result)
+			{
+				case OS_ANPC_STATUS_SUCCESS:
+				#if 0
+				{
+					srv_anp_client_connect_req(BD_ADDR * btaddr,BOOL direct);
+				}
+				#endif
+					break;
+				case OS_ANPC_STATUS_FAILED:
+				case OS_ANPC_STATUS_PENDING:
+					break;
+				default:
+					break;
+			}
+		}
+			break;
+		case ANPC_MMI_EVT_READ_SUPPORTED_NEW_ALERT_CNF:
+		{
+			if (param->result == OS_ANPC_STATUS_SUCCESS)
+			{
+				kal_uint16 category_Lbits;
+				kal_uint16 category_Hbits;
+				category_Lbits = (param->category_bit & 0x00FF);
+				category_Hbits = (param->category_bit & 0xFF00);
+#if 0
+				if(set_ok)
+				    category_bit &= ~CATEGORY_BIT_SIMPLE_ALERT;
+				    srv_anp_client_wirte_control_point(2nd bit);
+				else
+					do nothing
+
+				for ()
+#endif
+#if 0
+				if ((category_Lbits & CATEGORY_BIT_SIMPLE_ALERT)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_NEW_CNF_SIMPLE);
+					srv_anp_client_wirte_control_point(&param->bdaddr,
+									 CMD_ENABLE_NEW_ALERT,
+									 CATEGORY_ID_SIMPLE_ALERT);
+				
+				}
+				else if (category_Lbits & CATEGORY_BIT_EMAIL)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_NEW_CNF_EMAIL);
+					srv_anp_client_wirte_control_point(&param->bdaddr,
+									 CMD_ENABLE_NEW_ALERT,
+									 CATEGORY_ID_EMAIL);
+				
+				}
+				else if (category_Lbits & CATEGORY_BIT_NEWS)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_NEW_CNF_NEWS);
+					srv_anp_client_wirte_control_point(&param->bdaddr,
+									 CMD_ENABLE_NEW_ALERT,
+									 CATEGORY_ID_NEWS);
+				
+				}
+				else if (category_Lbits & CATEGORY_BIT_CALL)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_NEW_CNF_CALL);
+					srv_anp_client_wirte_control_point(&param->bdaddr,
+									 CMD_ENABLE_NEW_ALERT,
+									 CATEGORY_ID_CALL);
+				
+				}
+				else 
+#endif
+
+					if (category_Lbits & CATEGORY_BIT_MISSED_CALL)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_NEW_CNF_MISSED_CALL);
+					srv_anp_client_wirte_control_point(anpc_addr,
+									 CMD_ENABLE_NEW_ALERT,
+									 CATEGORY_ID_MISSED_CALL);
+				
+				}
+					#if 0
+				else 
+					#endif
+					if (category_Lbits & CATEGORY_BIT_SMS_MMS)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_NEW_CNF_SMS_MMS);
+					new_message_flag = 1;
+					#if 0
+					srv_anp_client_wirte_control_point(&param->bdaddr,
+									 CMD_ENABLE_NEW_ALERT,
+									 CATEGORY_ID_SMS_MMS);
+					#endif
+				
+				}
+					#if 0
+				else if (category_Lbits & CATEGORY_BIT_VOICE_MAIL)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_NEW_CNF_VOICE_MAIL);
+					srv_anp_client_wirte_control_point(&param->bdaddr,
+									 CMD_ENABLE_NEW_ALERT,
+									 CATEGORY_ID_VOICE_MAIL);
+				
+				}
+				else if (category_Lbits & CATEGORY_BIT_SCHEDULE)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_NEW_CNF_SCHEDULE);
+					srv_anp_client_wirte_control_point(&param->bdaddr,
+									 CMD_ENABLE_NEW_ALERT,
+									 CATEGORY_ID_SCHEDULE);
+				
+				}
+				else if (category_Hbits & CATEGORY_BIT_HIGH_PRIORITIZED_ALERT)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_NEW_CNF_HIGH_PRO);
+					srv_anp_client_wirte_control_point(&param->bdaddr,
+									 CMD_ENABLE_NEW_ALERT,
+									 CATEGORY_ID_HIGH_PRIORITIZED_ALERT);
+				
+				}
+				else if (category_Hbits & CATEGORY_BIT_INSTANT_MESSAGE)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_NEW_CNF_INSTANT);
+					srv_anp_client_wirte_control_point(&param->bdaddr,
+									 CMD_ENABLE_NEW_ALERT,
+									 CATEGORY_ID_INSTANT_MESSAGE);
+				
+				}
+				#endif
+			}
+			else
+			{
+	            /*error popup*/
+			}
+		}
+			break;
+		case ANPC_MMI_EVT_READ_SUPPORTED_UNREAD_ALERT_CNF:
+		{
+			
+			if (param->result == OS_ANPC_STATUS_SUCCESS)
+			{
+				kal_uint16 category_lbits;
+				kal_uint16 category_hbits;
+				category_lbits = (param->category_bit & 0x00FF);
+				category_hbits = (param->category_bit & 0xFF00);
+				#if 0
+				if (category_lbits & CATEGORY_BIT_SIMPLE_ALERT)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_UNREAD_CNF_SIMPLE);
+					srv_anp_client_wirte_control_point(&param->bdaddr,
+									 CMD_ENABLE_UNREAD_ALERT,
+									 CATEGORY_ID_SIMPLE_ALERT);
+				
+				}
+				else if (category_lbits & CATEGORY_BIT_EMAIL)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_UNREAD_CNF_EMAIL);
+					srv_anp_client_wirte_control_point(&param->bdaddr,
+									 CMD_ENABLE_UNREAD_ALERT,
+									 CATEGORY_ID_EMAIL);
+				
+				}
+				else if (category_lbits & CATEGORY_BIT_NEWS)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_UNREAD_CNF_NEWS);
+					srv_anp_client_wirte_control_point(&param->bdaddr,
+									 CMD_ENABLE_UNREAD_ALERT,
+									 CATEGORY_ID_NEWS);
+				
+				}
+				else if (category_lbits & CATEGORY_BIT_CALL)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_UNREAD_CNF_CALL);
+					srv_anp_client_wirte_control_point(&param->bdaddr,
+									 CMD_ENABLE_UNREAD_ALERT,
+									 CATEGORY_ID_CALL);
+				
+				}
+				else 
+#endif
+					if (category_lbits & CATEGORY_BIT_MISSED_CALL)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_UNREAD_CNF_MISSED_CALL);
+					srv_anp_client_wirte_control_point(anpc_addr,
+									 CMD_ENABLE_UNREAD_ALERT,
+									 CATEGORY_ID_MISSED_CALL);
+				
+				}
+				if (category_lbits & CATEGORY_BIT_SMS_MMS)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_UNREAD_CNF_SMS_MMS);
+					unread_message_flag = 1;
+					#if 0
+					srv_anp_client_wirte_control_point(&param->bdaddr,
+									 CMD_ENABLE_UNREAD_ALERT,
+									 CATEGORY_ID_SMS_MMS);
+					#endif
+				
+				}
+				#if 0
+				else if (category_lbits & CATEGORY_BIT_VOICE_MAIL)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_UNREAD_CNF_VOICE_MAIL);
+					srv_anp_client_wirte_control_point(&param->bdaddr,
+									 CMD_ENABLE_UNREAD_ALERT,
+									 CATEGORY_ID_VOICE_MAIL);
+				
+				}
+				else if (category_lbits & CATEGORY_BIT_SCHEDULE)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_UNREAD_CNF_SCHEDULE);
+					srv_anp_client_wirte_control_point(&param->bdaddr,
+									 CMD_ENABLE_UNREAD_ALERT,
+									 CATEGORY_ID_SCHEDULE);
+				
+				}
+				else if (category_hbits & CATEGORY_BIT_HIGH_PRIORITIZED_ALERT)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_UNREAD_CNF_HIGH_PRO);
+					srv_anp_client_wirte_control_point(&param->bdaddr,
+									 CMD_ENABLE_UNREAD_ALERT,
+									 CATEGORY_ID_HIGH_PRIORITIZED_ALERT);
+				
+				}
+				else if (category_hbits & CATEGORY_BIT_INSTANT_MESSAGE)
+				{
+				    MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_READ_UNREAD_CNF_INSTANT);
+					srv_anp_client_wirte_control_point(&param->bdaddr,
+									 CMD_ENABLE_UNREAD_ALERT,
+									 CATEGORY_ID_INSTANT_MESSAGE);
+				
+				}
+				#endif
+			}
+			else
+			{
+
+	            /*error popup*/
+			}
+		}
+			break;
+		case ANPC_MMI_EVT_NEW_ALERT_NOTIFY_IND:
+		{
+			switch (param->category_id)
+			{
+				case CATEGORY_ID_SIMPLE_ALERT:			
+				{
+					
+				}
+					break;
+	            case CATEGORY_ID_EMAIL:
+				{
+					
+				}
+					break;
+				case CATEGORY_ID_NEWS:
+				{
+
+				
+				}
+					break;
+				case CATEGORY_ID_CALL:
+				{
+					
+				}
+					break;
+				case CATEGORY_ID_MISSED_CALL:
+				{
+					MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_NEW_IND_MISSED_CALL,param->alert_num,param->alert_info[0],
+						param->alert_info[1],param->alert_info[2],param->alert_info[3],param->alert_info[4],param->alert_info[5],
+						param->alert_info[6],param->alert_info[7],param->alert_info[8],param->alert_info[9],param->alert_info[10],
+						param->alert_info[11],param->alert_info[12],param->alert_info[13],param->alert_info[14],param->alert_info[15],
+						param->alert_info[16],param->alert_info[17]);
+					
+					//kal_wsprintf( outstr,"popup: %w %s %d %w",...);
+					if (param->alert_num != 0)
+					{
+					   if (param->alert_num > 1)
+					   {
+						   anpc_str_id = (U32)STR_ID_ANP_MISSED_CALL;
+					   }
+					   else
+					   {
+						   anpc_str_id = (U32)STR_ID_ANP_MISSED_CALLS ;
+					   }
+                        anpc_alert_num = param->alert_num;
+						/*print*/
+					}
+					if(memcmp(&(param->alert_info),&base_alert_info, (sizeof(kal_uint8) * ANP_MAX_INFO_LENGTH)) != 0)
+					{
+						memset(&anpc_alert_info,0x00,ANP_MAX_INFO_LENGTH);
+						memcpy(&anpc_alert_info, &param->alert_info, ANP_MAX_INFO_LENGTH);
+						/*print*/
+					}
+					memset(popup_str,0,sizeof(popup_str));
+					kal_wsprintf(popup_str,
+								"%d %w %w %s",
+								anpc_alert_num,
+								GetString(anpc_str_id),
+								GetString(STR_ID_ANP_FROM),
+								anpc_alert_info);
+					
+					mmi_anpapp_launch_enter_popup();
+				}
+					break;
+				case CATEGORY_ID_SMS_MMS:
+				{
+					MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_NEW_IND_SMS_MMS,param->alert_num,param->alert_info[0],
+						param->alert_info[1],param->alert_info[2],param->alert_info[3],param->alert_info[4],param->alert_info[5],
+						param->alert_info[6],param->alert_info[7],param->alert_info[8],param->alert_info[9],param->alert_info[10],
+						param->alert_info[11],param->alert_info[12],param->alert_info[13],param->alert_info[14],param->alert_info[15],
+						param->alert_info[16],param->alert_info[17]);
+
+					if (param->alert_num != 0)
+					{
+					   if (param->alert_num > 1)
+					   {
+						   anpc_str_id = (U32)STR_ID_ANP_MESSAGES;
+					   }
+					   else
+					   {
+						   anpc_str_id = (U32)STR_ID_ANP_MESSAGE;
+					   }
+                        anpc_alert_num = param->alert_num;
+						/*print*/
+					}
+					if(memcmp(&(param->alert_info),&base_alert_info, (sizeof(kal_uint8) * ANP_MAX_INFO_LENGTH)) != 0)
+					{
+						memset(&anpc_alert_info,0x00,ANP_MAX_INFO_LENGTH);
+						memcpy(&anpc_alert_info, &param->alert_info, ANP_MAX_INFO_LENGTH);
+						/*print*/
+					}
+
+				    memset(popup_str,0,sizeof(popup_str));
+				    kal_wsprintf(popup_str,
+							"%d %w %w %s",
+							anpc_alert_num,
+							GetString(anpc_str_id),
+							GetString(STR_ID_ANP_FROM),
+							anpc_alert_info);
+
+				    mmi_anpapp_launch_enter_popup();
+
+				}
+					break;
+				case CATEGORY_ID_VOICE_MAIL:
+				{
+				
+				}
+					break;
+				case CATEGORY_ID_SCHEDULE:
+				{
+
+				
+				}
+					break;
+				case CATEGORY_ID_HIGH_PRIORITIZED_ALERT:
+				{
+				
+				}
+					break;
+				case CATEGORY_ID_INSTANT_MESSAGE:
+				{
+
+				
+				}
+					break;
+				default:
+					break;
+			}
+		}
+			break;
+		case ANPC_MMI_EVT_UNREAD_ALERT_NOTIFY_IND:
+		{
+			switch (param->category_id)
+			{
+				case CATEGORY_ID_SIMPLE_ALERT:			
+				{
+
+				}
+					break;
+	            case CATEGORY_ID_EMAIL:
+				{
+				}
+					break;
+				case CATEGORY_ID_NEWS:
+				{
+
+				
+				}
+					break;
+				case CATEGORY_ID_CALL:
+				{
+				
+				}
+					break;
+				case CATEGORY_ID_MISSED_CALL:
+				{
+					MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_UNREAD_IND_MISSED_CALL,param->alert_num,param->alert_info[0],
+						param->alert_info[1],param->alert_info[2],param->alert_info[3],param->alert_info[4],param->alert_info[5],
+						param->alert_info[6],param->alert_info[7],param->alert_info[8],param->alert_info[9],param->alert_info[10],
+						param->alert_info[11],param->alert_info[12],param->alert_info[13],param->alert_info[14],param->alert_info[15],
+						param->alert_info[16],param->alert_info[17]);
+
+					if (param->alert_num != 0)
+					{
+					   if (param->alert_num > 1)
+					   {
+						   anpc_str_id = (U32)STR_ID_ANP_MISSED_CALLS;
+					   }
+					   else
+					   {
+						   anpc_str_id = (U32)STR_ID_ANP_MISSED_CALL;
+					   }
+                        anpc_alert_num = param->alert_num;
+						/*print*/
+					}
+					if(memcmp(&(param->alert_info),&base_alert_info, (sizeof(kal_uint8) * ANP_MAX_INFO_LENGTH)) != 0)
+					{
+						memset(&anpc_alert_info,0x00,ANP_MAX_INFO_LENGTH);
+						memcpy(&anpc_alert_info, &param->alert_info, ANP_MAX_INFO_LENGTH);
+						/*print*/
+					}
+					
+				    memset(popup_str,0,sizeof(popup_str));
+				    kal_wsprintf(popup_str,
+							"%d %w %w %s",
+							anpc_alert_num,
+							GetString(anpc_str_id),
+							GetString(STR_ID_ANP_FROM),
+							anpc_alert_info);
+					mmi_anpapp_launch_enter_popup();				
+				}
+					break;
+				case CATEGORY_ID_SMS_MMS:
+				{	
+					MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_UNREAD_IND_SMS_MMS,param->alert_num,param->alert_info[0],
+						param->alert_info[1],param->alert_info[2],param->alert_info[3],param->alert_info[4],param->alert_info[5],
+						param->alert_info[6],param->alert_info[7],param->alert_info[8],param->alert_info[9],param->alert_info[10],
+						param->alert_info[11],param->alert_info[12],param->alert_info[13],param->alert_info[14],param->alert_info[15],
+						param->alert_info[16],param->alert_info[17]);
+
+					if (param->alert_num != 0)
+					{
+					   if (param->alert_num > 1)
+					   {
+						   anpc_str_id = (U32)STR_ID_ANP_MESSAGES;
+					   }
+					   else
+					   {
+						   anpc_str_id = (U32)STR_ID_ANP_MESSAGE;
+					   }
+                        anpc_alert_num = param->alert_num;
+						/*print*/
+					}
+					if(memcmp(&(param->alert_info),&base_alert_info, (sizeof(kal_uint8) * ANP_MAX_INFO_LENGTH)) != 0)
+					{
+						memset(&anpc_alert_info,0x00,ANP_MAX_INFO_LENGTH);
+						memcpy(&anpc_alert_info, &param->alert_info, ANP_MAX_INFO_LENGTH);
+						/*print*/
+					}
+					
+					memset(popup_str,0,sizeof(popup_str));
+					kal_wsprintf(popup_str,
+							"%d %w %w %s",
+							anpc_alert_num,
+							GetString(anpc_str_id),
+							GetString(STR_ID_ANP_FROM),
+							anpc_alert_info);
+					mmi_anpapp_launch_enter_popup();
+
+				}
+					break;
+				case CATEGORY_ID_VOICE_MAIL:
+				{
+				
+				}
+					break;
+				case CATEGORY_ID_SCHEDULE:
+				{
+
+				
+				}
+					break;
+				case CATEGORY_ID_HIGH_PRIORITIZED_ALERT:
+				{
+				
+				}
+					break;
+				case CATEGORY_ID_INSTANT_MESSAGE:
+				{
+
+				
+				}
+					break;
+				default:
+					break;
+			}
+		}
+			break;
+		case ANPC_MMI_EVT_WRITE_CONTROL_POINT_CNF:
+		{
+			MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_WRITE_CP_CNF,param->cmd,param->result);
+	        if ((param->cmd == CMD_ENABLE_NEW_ALERT) &&(param->result == OS_ANPC_STATUS_SUCCESS))
+	        {
+		        if(param->category_id == CATEGORY_ID_MISSED_CALL)
+	        	{
+		            if (new_message_flag == 1)
+	            	{					
+		            	srv_anp_client_wirte_control_point(anpc_addr,
+									 CMD_ENABLE_NEW_ALERT,
+									 CATEGORY_ID_SMS_MMS);
+						new_message_flag = 0;
+					}
+	        	}
+	        	/* note the addr*/
+				else if (param->category_id == CATEGORY_ID_SMS_MMS)
+				{
+
+					/*to write the control point cmd*/
+					srv_anp_client_configure_alert(anpc_addr,ANPC_OPER_CONIFG_NEW_ALERT,ANPC_CONFIG_ALERT_ON);
+				}
+			}
+			else if ((param->cmd == CMD_ENABLE_UNREAD_ALERT) &&(param->result == OS_ANPC_STATUS_SUCCESS))
+			{
+				if(param->category_id == CATEGORY_ID_MISSED_CALL)
+	        	{
+		            if (unread_message_flag == 1)
+	            	{					
+						srv_anp_client_wirte_control_point(anpc_addr,
+										 CMD_ENABLE_UNREAD_ALERT,
+										 CATEGORY_ID_SMS_MMS);
+						
+						unread_message_flag = 0;
+
+					}
+	        	}
+				
+				else if (param->category_id == CATEGORY_ID_SMS_MMS)
+				{
+					srv_anp_client_configure_alert(anpc_addr,ANPC_OPER_CONFIG_UNREAD_ALERT,ANPC_CONFIG_ALERT_ON);   
+
+				}
+			}
+			else
+			{
+
+				/*error popup*/
+				//mmi_display_popup(UI_string_type string,mmi_event_notify_enum event_id);
+			}
+		}
+			break;
+		case ANPC_MMI_EVT_CONIFG_NEW_ALERT_CNF:
+		{
+			if (param->result == OS_ANPC_STATUS_SUCCESS)
+			{
+				MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_CONFIG_NEW_CNF);
+				srv_anp_client_read_supported_unread_alert_category_req(anpc_addr);
+			}
+			else
+			{
+				/*error popup*/
+			}
+		}
+			break;
+		case ANPC_MMI_EVT_CONFIG_UNREAD_ALERT_CNF:
+		{
+			if (param->result == OS_ANPC_STATUS_SUCCESS)
+			{
+				MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_ANPAPP_CONFIG_UNREAD_CNF);
+		        /*nothing*/
+			}
+			else
+			{
+				/*error popup*/
+			}
+		}
+			break;
+		default:
+			break;
+		
+	}
+	return;
+}
+
+/*****************************************************************************
+ * FUNCTION
+ *  mmi_bt_power_on_init_anpc
+ * DESCRIPTION
+ *  This function is to rigister anp profile CBs
+ * PARAMETERS
+ *  void
+ *
+ *
+ * RETURNS
+ *  void
+ *****************************************************************************/
+void mmi_bt_enable_tip_to_sync_time(void)
+{
+    /*----------------------------------------------------------------*/
+    /* Local Variables                                                */
+    /*----------------------------------------------------------------*/
+	
+    /*----------------------------------------------------------------*/
+    /* Code Body                                                      */
+    /*----------------------------------------------------------------*/
+	MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_TIP_REGISTER);
+	if (bt has power on)
+	{
+	    srv_tip_register((tipc_app_callback)mmi_bt_tip_register_cb);
+    }
+	return ;
+}
+void mmi_bt_tip_register_cb(void* app_cntx,tipc_event_type event,OS_STATUS status,void* data)
+{
+    if (TIPC_EVENT_REGISTER_CNF == event)
+    {
+        if (SUCCESS == status)
+        {
+            g_tip_cntx = app_cntx;  
+        }
+        else
+        {
+            ?*error popup*/       
+            
+        }  
+    }
+    else if (TIPC_EVENT_TIME_INFO_RESULT == event)
+    {
+         if ((SUCCESS == status) && ( g_tip_cntx == app_cntx))
+        {
+            g_tip_data = data;  
+        }
+        else
+        {
+            ?*error popup*/       
+            
+        }          
+    }
+    else if (TIPC_EVENT_DEREGISTER_CNF == event)
+    {
+         if ((SUCCESS == status) && ( g_tip_cntx == app_cntx))
+        {
+            mmi_bt_disable_tip_to_sync_time(app_cntx);  
+        }
+        else
+        {
+            ?*error popup*/           
+        }          
+    }     
+}
+void mmi_bt_tip_noti_recv_update_time(void* time_data)
+{
+    applib_time_struct local_time;
+    
+    local_time.nYear = time_data->year;
+    local_time.nMonth = time_data->month;
+    local_time.nDay = time_data->day;
+    local_time.nHour = time_data->hours;
+    local_time.nMin = time_data->minutes;
+    local_time.nSec = time_data->secaonds;
+    local_time.DayIndex = time_data->day_of_week;/* 0=Sunday */
+ 
+    mmi_dt_set_rtc_dt((MYTIME*)&local_time);
+}
+
+/*****************************************************************************
+ * FUNCTION
+ *  mmi_bt_power_on_deinit_anpc
+ * DESCRIPTION
+ *  This function is to unregister service event
+ * PARAMETERS
+ *  void
+ *
+ *
+ * RETURNS
+ *  void
+ *****************************************************************************/
+void mmi_bt_disable_tip_to_sync_time(void)
+{
+    /*----------------------------------------------------------------*/
+    /* Local Variables                                                */
+    /*----------------------------------------------------------------*/
+
+    /*----------------------------------------------------------------*/
+    /* Code Body                                                      */
+    /*----------------------------------------------------------------*/
+	MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_TIP_DEREGISTER);
+	srv_tip_deregister(void *tipc_cntx);
+	return;
+}
+
+
+#if 0
+U8 fmp_app_ut_handle(U8 index, kal_uint8* string)
+{
+    /*----------------------------------------------------------------*/
+    /* Local Variables                                                */
+    /*----------------------------------------------------------------*/
+
+    /*----------------------------------------------------------------*/
+    /* Code Body                                                      */
+    /*----------------------------------------------------------------*/
+    kal_prompt_trace(MOD_MMI, "[FMP APP] ut handle:%d, string:%c%c%c%c%c%c%c", index, string[4], string[5], string[6],string[7],string[8],string[9],string[10]);
+
+    if (strcmp((char*)string, "FMP_START") == 0)
+    {
+		mmi_fmpapp_entry_normal_screen();
+        return MMI_TRUE;
+    }
+    else if(strcmp((char*)string, "FMP_FIND") == 0)
+    {
+		mmi_fmpapp_entry_finding_screen();
+    	return MMI_TRUE;       
+    }
+	else if(strcmp((char*)string, "FMP_STOP") == 0)
+    {
+		mmi_fmpapp_stop_clicked_cb();
+    	return MMI_TRUE;       
+    }  
+	else if(strcmp((char*)string, "FMP_ALERT") == 0)
+    {
+		mmi_fmpapp_target_alert_enable();
+    	return MMI_TRUE;       
+    }  
+	else if(strcmp((char*)string, "FMP_ALERTED") == 0)
+    {
+		mmi_fmpapp_target_alert_disable();
+    	return MMI_TRUE;       
+    }  
+	return MMI_TRUE;
+}
+#endif
+
+#endif /* __MMI_BLE_PXP_SUPPORT__*/
+

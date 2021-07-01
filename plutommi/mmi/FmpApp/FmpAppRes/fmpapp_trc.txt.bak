@@ -1,0 +1,29 @@
+[APP NAME] = FMPAPP
+[SCOPE] = PLUTO
+[MODULE] = MOD_MMI_CONN_APP
+
+#start trace
+
+TRC_MSG(TRC_BLE_FMPAPP_CLIENT_INIT,     "[BLE_FMPAPP]client_init, mmi_fmpapp_client_init()") 
+TRC_MSG(TRC_BLE_FMPAPP_BTC_SWITCH_ON,     "[BLE_FMPAPP]Switch_on, mmi_bt_power_on_init_fmpl()") 
+TRC_MSG(TRC_BLE_FMPAPP_BTC_SWITCH_OFF,     "[BLE_FMPAPP]Switch_off, mmi_bt_power_on_deinit_fmpl()")
+TRC_MSG(TRC_BLE_FMPAPP_FREE_CNTX,     "[BLE_FMPAPP]free_cntx, mmi_fmpapp_free_context()")
+TRC_MSG(TRC_BLE_FMPAPP_CREATE_CNTX,     "[BLE_FMPAPP]create_cntx, mmi_fmpapp_create_context()")
+TRC_MSG(TRC_BLE_FMPAPP_ENTER_START,     "[BLE_FMPAPP]enter_start, mmi_fmpapp_entry_normal_screen()")
+TRC_MSG(TRC_BLE_FMPAPP_START_SHOW,     "[BLE_FMPAPP]start_show, mmi_fmpapp_normal_sreen_show()")
+TRC_MSG(TRC_BLE_FMPAPP_LOCATOR_CNNC,      "[BLE_FMPAPP]Lconnect_cb, rbd_addr =[%d],connect_state=[%d]")
+TRC_MSG(TRC_BLE_FMPAPP_LOCATOR_ALERT,      "[BLE_FMPAPP]Lalert_cb, addr =[%d],alert_result=[%d]")
+TRC_MSG(TRC_BLE_FMPAPP_ENTER_STOP,     "[BLE_FMPAPP]enter_stop, mmi_fmpapp_entry_finding_screen()")
+TRC_MSG(TRC_BLE_FMPAPP_STOP_SHOW,     "[BLE_FMPAPP]stop_show, mmi_fmpapp_finding_sreen_show()")
+TRC_MSG(TRC_BLE_FMPAPP_STOP_SHOW_CLOSE,     "[BLE_FMPAPP]stop_to_start, mmi_fmpapp_stop_clicked_cb()")
+
+
+TRC_MSG(TRC_BLE_FMPAPP_SERVER_INIT,     "[BLE_FMPAPP]server_init, mmi_fmpapp_server_init()")
+TRC_MSG(TRC_BLE_FMPAPP_BTS_SWITCH_ON,     "[BLE_FMPAPP]Switch_on, mmi_bt_power_on_init_fmps()") 
+TRC_MSG(TRC_BLE_FMPAPP_BTS_SWITCH_OFF,     "[BLE_FMPAPP]Switch_off, mmi_bt_power_on_deinit_fmps()")
+
+TRC_MSG(TRC_BLE_FMPAPP_REMOTER_CNNC,      "[BLE_FMPAPP]Rconnect_cb, bdaddr =[%d],connect_state=[%d]")
+TRC_MSG(TRC_BLE_FMPAPP_REMOTER_ALERT,      "[BLE_FMPAPP]Ralert_cb, bdaddr =[%d],alert_level=[%d]")
+	MMI_TRACE(MMI_CONN_TRC_G7_BT, TRC_BLE_FMPAPP_REMOTER_ALERT_STOP);
+TRC_MSG(TRC_BLE_FMPAPP_REMOTER_ALERT_START,     "[BLE_FMPAPP]alert_enable, mmi_fmpapp_free_context()")
+TRC_MSG(TRC_BLE_FMPAPP_REMOTER_ALERT_STOP,     "[BLE_FMPAPP]alert_disable, mmi_fmpapp_create_context()")

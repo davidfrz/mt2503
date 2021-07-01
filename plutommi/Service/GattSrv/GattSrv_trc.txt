@@ -1,0 +1,35 @@
+[APP NAME] = SRV_GATT
+[SCOPE] = PLUTO
+[MODULE] = MOD_MMI_CONN_APP
+
+#starttrace
+
+TRC_MSG(TRC_GATTC_SET_ADV_CNF,     "[GATTCSRV]srv_gattc_set_adv_interval_cnf() result = %d !\n") 
+TRC_MSG(TRC_GATTC_SET_ADV_REQ,     "[GATTCSRV]srv_gattc_set_adv_interval(profid=%d, curr = %d,  new = %d)\n") 
+TRC_MSG(TRC_GATTC_SET_CONN_CNF,    "[GATTCSRV] conn_interval_update_result = %d !\n") 
+TRC_MSG(TRC_GATTC_RESET_ALL_LINKS,     "[GATTCSRV]gattc_reset_all_link_context %d,%d,%d\n") 
+TRC_MSG(TRC_GATTC_ADDR_NULL,     "[GATTCSRV]addr is null!\n") 
+TRC_MSG(TRC_GATTC_ADDR_EXISTED,     "[GATTCSRV]addr have existed, link_index=%d!\n") 
+TRC_MSG(TRC_GATTC_ADDR_FIRST_EXIST,     "[GATTCSRV]addr first exist,Link_index=%d!\n") 
+TRC_MSG(TRC_GATTC_ADDR_SPACE_FULL,     "[GATTCSRV]addr space is full\n")
+TRC_MSG(TRC_GATTC_PROFILE_EXIST_IN_HIGH,     "[GATTCSRV]profile_id have existed in High queue,index=%d\n")
+TRC_MSG(TRC_GATTC_PROFILE_EXIST_IN_HIGH_FIRST,     "[GATTCSRV]profile_id first exist in High queue,index=%d\n")
+TRC_MSG(TRC_GATTC_BUFFER_RESET,     "[GATTCSRV]profile_id buffer reset end!\n")
+TRC_MSG(TRC_GATTC_PROFILE_EXIST_IN_BALANCE,     "[GATTCSRV]profile_id have existed in Balance queue,index=%d\n")
+TRC_MSG(TRC_GATTC_PROFILE_EXIST_IN_BALANCE_FIRST,     "[GATTCSRV]profile_id first exist in Balance queue,index=%d\n")
+TRC_MSG(TRC_GATTC_PROFILE_EXIST_IN_LOW,     "[GATTCSRV]profile_id have existed in Low queue,index=%d\n")
+TRC_MSG(TRC_GATTC_PROFILE_EXIST_IN_LOW_FIRST,     "[GATTCSRV]profile_id first exist in Low queue,index=%d\n")
+TRC_MSG(TRC_GATTC_CONN_UPDATE,     "[GATTCSRV] srv_gattc_conn_param_update link_index=%d, profile_id=%d, next= %d, curr=%d\n")
+TRC_MSG(TRC_GATTC_CONN_UPDATE_NO_CHANGE,     "[GATTCSRV]next equal curr interval, so return!\n")
+TRC_MSG(TRC_GATTC_CONN_UPDATE_ERROR,     "[GATTCSRV]conn param update error!\n")
+TRC_MSG(TRC_GATTC_CONN_INTERVAL_REQ,     "[GATTCSRV] gattc_handle_start_research_service_ind %d %d %d %d %d %d\n")
+TRC_MSG(TRC_GATTC_START_RESEARCH,     "[GATTCSRV] gattc_handle_start_research_service_ind end!\n")
+TRC_MSG(TRC_GATTC_CONN_INTERVAL_RESET_OK,     "[GATTCSRV] gattc_conn_param_interval_reset success\n")
+
+TRC_MSG(TRC_GATTS_CONN_INTERVAL_RESET_OK,     "[GATTSSRV] gatts_conn_param_interval_reset success\n")
+TRC_MSG(TRC_GATTS_ADDR_NULL,     "[GATTSSRV] gatts_conn_param_interval_req addr is null\n")
+TRC_MSG(TRC_GATTS_CONN_INTERVAL_REQ,     "[GATTSSRV] gatts_conn_param_interval_req %d %d %d %d %d %d\n")
+TRC_MSG(TRC_GATTS_CONN_SET_LINK_NUM,     "[GATTSSRV] gatts_set_conn_interval_for_all_links linked_index=%d\n")
+TRC_MSG(TRC_GATTS_CONN_SET_START_SERVICE,     "[GATTSSRV] srv_gatts_start_service to update conn param!\n")
+TRC_MSG(TRC_GATTS_CONN_SET_STOP_SERVICE,     "[GATTSSRV] srv_gatts_stop_service to update conn param!\n")
+

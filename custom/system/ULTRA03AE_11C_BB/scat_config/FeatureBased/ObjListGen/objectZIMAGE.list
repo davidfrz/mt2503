@@ -1,0 +1,8 @@
+        ; ====== ANY_DATA list ======
+        CustStrRes.obj (+RO-DATA)
+        swje_const_tables.obj (+RO-DATA)
+        at_hs.obj (+RO-DATA)
+
+        ; ====== Wildcard ======
+        * (+RO-CODE)
+        * (+RO-DATA)

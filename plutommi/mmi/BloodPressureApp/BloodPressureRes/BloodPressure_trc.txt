@@ -1,0 +1,15 @@
+[APP NAME] = BLOODPRESSURE
+[SCOPE] = PLUTO
+[MODULE] = MOD_MMI_CONN_APP
+
+#start trace
+TRC_MSG(TRC_MMI_BP_TIMEOUT, "[BP]mmi_blood_pressure_detect_timeout\n")
+TRC_MSG(TRC_MMI_BP_SCRN_SHOW, "[BP]mmi_bp_scrn_show, detect_timeout = %d, sdp = %d, dbp = %d\n")
+TRC_MSG(TRC_MMI_BP_UPDATE_DATA,  "[BP]mmi_blood_pressure_update_data, sdp = %d, dbp = %d\n")
+TRC_MSG(TRC_MMI_BP_SEND_DATA_TO_BT,  "[BP]Send data: len = %d, result = %d\n")
+TRC_MSG(TRC_MMI_BP_SEND_DATA,  "[BP]mmi_blood_pressure_send_data, raw_len = %d\n")
+TRC_MSG(TRC_MMI_BP_HANDSHAKE,  "[BP]Handshake response, result = %d, len = %d\n")
+TRC_MSG(TRC_MMI_BP_PARSE_SCCUESS,  "[BP]parse success, write_NVRAM_len = %d\n")
+TRC_MSG(TRC_MMI_BP_SEND_RESPONSE,  "[BP]Send RSP: len = %d, result = %d\n")
+TRC_MSG(TRC_MMI_BP_CONNECTION_CHANGE,  "[BP]BT_NOTI_CONNECTION_STATUS_CHANGE, connected = %d\n")
+TRC_MSG(TRC_MMI_BP_DETECT_TIMER_START,  "[BP]Detect timer start\n")

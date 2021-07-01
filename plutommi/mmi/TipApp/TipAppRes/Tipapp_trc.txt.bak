@@ -1,0 +1,23 @@
+[APP NAME] = TIPAPP
+[SCOPE] = PLUTO
+[MODULE] = MOD_MMI_CONN_APP
+
+#start trace
+
+TRC_MSG(TRC_BLE_TIP_REGISTER,     "[BLE_TIPAPP]client_regiter") 
+TRC_MSG(TRC_BLE_TIP_UPDATE_TIME,     "[BLE_TIPAPP]update_time") 
+TRC_MSG(TRC_BLE_TIP_DEREGISTER,     "[BLE_TIPAPP]client_deregiter")
+
+
+TRC_MSG(TRC_BLE_TIP_REGISTER_CB,     "[BLE_TIPAPP]register_cb, status =[%d]")
+TRC_MSG(TRC_BLE_TIP_TIME_INFO,     "[BLE_TIPAPP]time_info_cb, status =[%d]")
+TRC_MSG(TRC_BLE_TIP_DEREGISTER_CB,     "[BLE_TIPAPP]deregister_cb, status =[%d]")
+
+TRC_MSG(TRC_BLE_ANPAPP_WRITE_CP_CNF,     "[BLE_ANPAPP]write_cp_cb, param->cmd =[%d],param->result =[%d]")
+TRC_MSG(TRC_BLE_ANPAPP_CONFIG_NEW_CNF,     "[BLE_ANPAPP]config_new_alert_cb")
+TRC_MSG(TRC_BLE_ANPAPP_CONFIG_UNREAD_CNF,     "[BLE_ANPAPP]config_new_alert_cb")
+
+TRC_MSG(TRC_BLE_ANPAPP_NEW_IND_MISSED_CALL,     "[BLE_ANPAPP]Read_New_missed_call, param->alert_num =[%d],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x]")
+TRC_MSG(TRC_BLE_ANPAPP_NEW_IND_SMS_MMS,     "[BLE_ANPAPP]Read_New_Message, param->alert_num =[%d],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x]")
+TRC_MSG(TRC_BLE_ANPAPP_UNREAD_IND_MISSED_CALL,     "[BLE_ANPAPP]Read_New_missed_call, param->alert_num =[%d],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x]")
+TRC_MSG(TRC_BLE_ANPAPP_UNREAD_IND_SMS_MMS,     "[BLE_ANPAPP]Read_New_Message, param->alert_num =[%d],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x]")

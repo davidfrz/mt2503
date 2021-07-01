@@ -1,0 +1,3 @@
+31275	(IMG_ID_PHNSET_WP_START + i)	Image associated with wallpaer.	../Res_MMI/res_PhoneSetting.c	0	1	0	..\\..\\Customer\\Images\\FTE_SLIM240X320\\MainLCD\\IdleScreen\\WallPaper\\wall01.JPG	0	1	APP name unknown	1	
+31279	IMG_ID_PHNSET_ON_ANIMATION_DEFAULT	Power ON image	../Res_MMI/res_PhoneSetting.c	0	1	0	..\\..\\Customer\\Images\\FTE_SLIM240X320\\MainLCD\\Active\\poweronoff\\logo.BMP	0	1	APP name unknown	1	
+31280	IMG_ID_PHNSET_OFF_ANIMATION_DEFAULT	Power OFF image	../Res_MMI/res_PhoneSetting.c	0	1	0	..\\..\\Customer\\Images\\FTE_SLIM240X320\\MainLCD\\Active\\poweronoff\\logo.BMP	0	1	APP name unknown	1	

@@ -1,0 +1,15 @@
+[22:30:14.70] start 
+[22:30:20.06] Executed make font_gen.exe 
+[22:30:20.46] Executed font_gen.exe 
+[22:30:32.54] Executed copy_ref_list.pl 
+[22:30:33.79] Executed make ref_list_merge.exe 
+[22:30:36.28] Executed run ref_list_merge.exe 
+[22:30:36.90] Executed make plmncreate.exe 
+[22:30:37.67] Executed run plmncreate.exe 
+[22:31:00.06] Executed make mtk_resgenerator.exe 
+[22:32:16.59] Executed run mtk_resgenerator.exe 
+[22:32:16.67] Executed mte_parse_img_usage.pl 
+[22:32:17.89] Executed mslt_parse_info.pl 
+[22:32:18.26] Executed output_image_html.pl 
+[22:32:18.71] Executed run venus_theme_generator.bat 
+[22:32:18.79] Executed generate_file_list.pl 

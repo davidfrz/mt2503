@@ -1,0 +1,42 @@
+[APP NAME] = SRV_SOGPS
+[SCOPE] = PLUTO
+[MODULE] = MOD_MMI_CONN_APP
+
+#starttrace
+
+TRC_MSG(TRC_BLE_SOGP_ADP_SEND_CONN_IND,     "[SOGPS ADP]send connect indication") 
+TRC_MSG(TRC_BLE_SOGP_ADP_SEND_DISCONN_IND,  "[SOGPS ADP]send disconnect indication") 
+TRC_MSG(TRC_BLE_SOGP_ADP_SEND_READ_IND,     "[SOGPS ADP]send read indication") 
+TRC_MSG(TRC_BLE_SOGP_ADP_SEND_WRITE_IND,     "[SOGPS ADP]send write indication") 
+TRC_MSG(TRC_BLE_SOGP_ADP_READ,          "[SOGPS ADP]read data: buf=%x size=%d read=%d recv_buf_len=%d")
+TRC_MSG(TRC_BLE_SOGP_ADP_WRITE,         "[SOGPS ADP]write data: buf = %x len=%d err=%d send_buf_len=%d")
+TRC_MSG(TRC_BLE_SOGP_ADP_CONNECT_CB,    "[SOGPS ADP]connect_state =%d")
+TRC_MSG(TRC_BLE_SOGP_ADP_READ_NOTIFY_CB,    "[SOGPS ADP]data to read cb: [%x %x] , len=%d, recv_buf_len=%d")
+TRC_MSG(TRC_BLE_SOGP_ADP_BUFFER_FULL,     "[SOGPS ADP]data to read cb: buffer full")
+TRC_MSG(TRC_BLE_SOGP_ADP_READ_REQUEST_CB,   "[SOGPS ADP]read data cb: buf=%x size=%d read=%d send_buf_len=%d")
+TRC_MSG(TRC_BLE_SOGP_ADP_SEND_DATA,   "[SOGPS ADP]send data: buf=%x send_buf_len=%d err=%d")
+
+TRC_MSG(TRC_BLE_SOGP_RESET_CONN_INTERVAL,     "[SOGPS] sogps_conn_param_interval_reset success\n") 
+TRC_MSG(TRC_BLE_SOGP_ADDR_NULL,     "[SOGPS] addr is null\n") 
+TRC_MSG(TRC_BLE_SOGP_SET_CONN_INTERVAL,     "[SOGPS] sogps_conn_param_interval_req success\n") 
+TRC_MSG(TRC_BLE_SOGP_FIND_UUID,     "[SOGPS] sogps_find_uuid_by_handle %x!\n") 
+TRC_MSG(TRC_BLE_SOGP_SERVER_REGISTER_CB,     "[SOGPS] sogps_register_server_callback status %x, state %d, op_flag %d!\n") 
+TRC_MSG(TRC_BLE_SOGP_FIND_UUID_TYPE,     "[SOGPS] svc_list->type %d!\n") 
+TRC_MSG(TRC_BLE_SOGP_CONNECT_CB,     "[SOGPS] sogps_connection_callback connected %d!\n") 
+TRC_MSG(TRC_BLE_SOGP_CONNECT_FAIL,     "[SOGPS] connect fail!\n") 
+TRC_MSG(TRC_BLE_SOGP_FIND_IN_LIST,     "[SOGPS] find in list!\n") 
+TRC_MSG(TRC_BLE_SOGP_NOT_FIND_IN_LIST,     "[SOGPS] not find in list!\n") 
+TRC_MSG(TRC_BLE_SOGP_WRITE_VALUE,     "[SOGPS] value %x %d %d %d %d\n") 
+TRC_MSG(TRC_BLE_SOGP_READ_CB,     "[SOGPS] sogps_request_read_callback handle:%x, type:%d, uuid %x, offset %d, long %d!\n") 
+TRC_MSG(TRC_BLE_SOGP_WRITE_CB,     "[SOGPS] sogps_request_write_callback attr_handle %x, svc_uuid16 %x, chr_uuid16 %x!\n") 
+TRC_MSG(TRC_BLE_SOGP_SERVICE_ADD_CB,     "[SOGPS] sogps_add_services_callback status %d, state %d, op_flag %d!\n") 
+TRC_MSG(TRC_BLE_SOGP_DISCONNECT_EVENT_CB,     "[SOGPS] sogps_disconnect_event_handler!\n") 
+TRC_MSG(TRC_BLE_SOGP_DISCONNECT_EVENT_CB_1,     "[SOGPS] find in list conn_status %d !\n") 
+TRC_MSG(TRC_BLE_SOGP_DISCONNECT_EVENT_CB_2,     "[SOGPS] sogps_disconnect_event_handler pConnCur->bdaddr %s!\n") 
+TRC_MSG(TRC_BLE_SOGP_RECV_EVENT_HANDLER_1,     "[SOGPS] sogps_recv_event_handler evt->evt_id %d!\n") 
+TRC_MSG(TRC_BLE_SOGP_RECV_EVENT_HANDLER_2,     "[SOGPS] sogps_recv_event_handler remote_addr %s!\n") 
+TRC_MSG(TRC_BLE_SOGP_INIT,     "[SOGPS] sogps_init state %d, op_flag %d!\n") 
+TRC_MSG(TRC_BLE_SOGP_DEINIT,     "[SOGPS] sogps_init state %d, op_flag %d!\n") 
+TRC_MSG(TRC_BLE_SOGP_SEND_DATA,     "[SOGPS] sogp_send_data buf:%x, size:%d !\n") 
+TRC_MSG(TRC_BLE_SOGP_EXEC_WRITE_CB,     "[SOGPS] sogps_request_exec_write_callback attr_handle %x, svc_uuid16 %x, chr_uuid16 %x!\n") 
+TRC_MSG(TRC_BLE_SOGP_EXEC_WRITE_SUCCESS,     "[SOGPS] sogps_request_exec_write_callback success trans_id = %d, cancel = %d\n")

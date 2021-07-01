@@ -1,0 +1,503 @@
+
+;/*****************************************************************************
+;*  Copyright Statement:
+;*  --------------------
+;*  This software is protected by Copyright and the information contained
+;*  herein is confidential. The software may not be copied and the information
+;*  contained herein may not be used or disclosed except with the written
+;*  permission of MediaTek Inc. (C) 2007
+;*
+;*  BY OPENING THIS FILE, BUYER HEREBY UNEQUIVOCALLY ACKNOWLEDGES AND AGREES
+;*  THAT THE SOFTWARE/FIRMWARE AND ITS DOCUMENTATIONS ("MEDIATEK SOFTWARE")
+;*  RECEIVED FROM MEDIATEK AND/OR ITS REPRESENTATIVES ARE PROVIDED TO BUYER ON
+;*  AN "AS-IS" BASIS ONLY. MEDIATEK EXPRESSLY DISCLAIMS ANY AND ALL WARRANTIES,
+;*  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF
+;*  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NONINFRINGEMENT.
+;*  NEITHER DOES MEDIATEK PROVIDE ANY WARRANTY WHATSOEVER WITH RESPECT TO THE
+;*  SOFTWARE OF ANY THIRD PARTY WHICH MAY BE USED BY, INCORPORATED IN, OR
+;*  SUPPLIED WITH THE MEDIATEK SOFTWARE, AND BUYER AGREES TO LOOK ONLY TO SUCH
+;*  THIRD PARTY FOR ANY WARRANTY CLAIM RELATING THERETO. MEDIATEK SHALL ALSO
+;*  NOT BE RESPONSIBLE FOR ANY MEDIATEK SOFTWARE RELEASES MADE TO BUYER'S
+;*  SPECIFICATION OR TO CONFORM TO A PARTICULAR STANDARD OR OPEN FORUM.
+;*
+;*  BUYER'S SOLE AND EXCLUSIVE REMEDY AND MEDIATEK'S ENTIRE AND CUMULATIVE
+;*  LIABILITY WITH RESPECT TO THE MEDIATEK SOFTWARE RELEASED HEREUNDER WILL BE,
+;*  AT MEDIATEK'S OPTION, TO REVISE OR REPLACE THE MEDIATEK SOFTWARE AT ISSUE,
+;*  OR REFUND ANY SOFTWARE LICENSE FEES OR SERVICE CHARGE PAID BY BUYER TO
+;*  MEDIATEK FOR SUCH MEDIATEK SOFTWARE AT ISSUE.
+;*
+;*  THE TRANSACTION CONTEMPLATED HEREUNDER SHALL BE CONSTRUED IN ACCORDANCE
+;*  WITH THE LAWS OF THE STATE OF CALIFORNIA, USA, EXCLUDING ITS CONFLICT OF
+;*  LAWS PRINCIPLES.  ANY DISPUTES, CONTROVERSIES OR CLAIMS ARISING THEREOF AND
+;*  RELATED THERETO SHALL BE SETTLED BY ARBITRATION IN SAN FRANCISCO, CA, UNDER
+;*  THE RULES OF THE INTERNATIONAL CHAMBER OF COMMERCE (ICC).
+;*
+;*****************************************************************************/
+;
+;/*****************************************************************************
+; *
+; * Filename:
+; * ---------
+; *   scatULTRA03AE_11C.txt (Dummy scatter)
+; *
+; * Project:
+; * --------
+; *   Maui_Software
+; *
+; * Description:
+; * ------------
+; *   defines the memory map for the validation board
+; *
+; * Author:
+; * -------
+; *   system auto generator p7.19 -> p7.20 ->p7.21 ->p7.22 ->p7.23 -> p7.24 + scatFrame v0.12 + sysGenUtility v0.49 -> p0.50 -> p0.51 -> p0.52 -> p0.53 -> p0.54 -> p0.55 -> p0.56 -> p0.57
+; *
+; * Auto Generated Date:
+; * -------
+; *   2017/1/6
+; *
+; * Revision History:
+; * -------
+; * $Log: scatULTRA03AE_11C.txt (Dummy scatter) system auto generator p7.19 -> p7.20 ->p7.21 ->p7.22 ->p7.23 -> p7.24 + scatFrame v0.12 + sysGenUtility v0.49 -> p0.50 -> p0.51 -> p0.52 -> p0.53 -> p0.54 -> p0.55 -> p0.56 -> p0.57 $
+; * 
+; ****************************************************************************/
+;
+;=========================================================================
+; This scatter file is auto-generated and please DO NOT change the content at will
+;=========================================================================
+;
+;--------------------
+; SCHEME   : external 128MB flash memory and 128MB SRAM
+; PLATFORM : MT2502
+; FEATURES : ESBNOR 
+;--------------------
+
+BOOTLOADER 0x10001000 0x00002400
+{
+}
+
+ROOT_CERT 0x10003400 0x00000000
+{
+    ; reserved region for secure chip project
+}
+
+EXT_BOOTLOADER 0x10003400 0x00009c00
+{
+}
+
+
+
+CBR 0x10010000 0x00000000
+{
+    ; reserved for bootup and features
+}
+
+; ROM Load region is block-aligned
+ROM 0x10010000
+{
+    ROM_GFH 0x10010000 
+    {
+         *                             (MAUI_GFH, +First)
+         *                             (MAUI_GFH_EXT)
+    }
+    ROM +0x0 0x00000800
+    {
+         bootarm.obj (C$$code,+First)
+;*obj (MBA_INFO)
+         *.obj (LEADING_PART)
+    }
+    ROM0 +0x0 
+    {
+         *.obj (SECINFO)
+    }
+    ROMHEAD +0x0 
+    {
+         *.obj (SECOND_PART)
+         *.obj (MAUI_FOTA_HEAD_INFO)
+    }
+    ROM_VIDEO +0x0 
+    {
+         * (MP4ENC1_DYNAMIC_CODE, MP4ENC1_DYNAMIC_RO)
+         * (MP4ENC_DYNAMIC_CODE, MP4ENC_DYNAMIC_RO)
+         * (MP4ENC2_DYNAMIC_RO)
+    }
+    ROM1 +0x0 
+    {
+; C++ related input sections
+         cpp_initialise.o              (+RO-CODE, +RO-DATA)
+         cpp_finalise.o                (+RO-CODE, +RO-DATA)
+         *                             (C$$pi_ctorvec)
+         *                             (C$$pi_dtorvec)
+         *                             (C$$ddtorvec)
+         *                             (C$$ctor)
+         *                             (C$$dtor)
+; for RVCT C++ initialize
+         init_aeabi.o                  (+RO-CODE, +RO-DATA)
+         *                             (.init_array)
+         *                             (.ARM.exidx)
+         
+         "*armlib/*.l"                 (+RO)
+         "*cpplib/*.l"                 (+RO)
+         *armlib\*.l                   (+RO)
+         *cpplib\*.l                   (+RO)
+         *armlib*                       (+RO-CODE, +RO-DATA)
+         *cpplib*                       (+RO-CODE, +RO-DATA)
+; ====== objectROM1_dummy.list ====== 
+; ====== Neptune-related obj ======
+         LzmaDec.obj (+RO)
+         l1_interface.obj (+RO)
+         
+; ====== default not in zimage ======
+         *bmt.lib (+RO)
+         *config.lib (+RO)
+         *drv.lib (+RO)
+         *mc.lib (+RO)
+         *usb_driver.lib (+RO)
+         *usb.lib (+RO)
+         *mm_comm.lib (+RO)
+         *mtd.lib (+RO)
+         *peripheral.lib (+RO)
+         *drv_display.lib (+RO)
+         *gfx_drv.lib (+RO)
+         *cipher.lib (+RO)
+         *drv_idp.lib (+RO)
+         *fdm.lib (+RO)
+         *init.lib (+RO)
+         *system.lib (+RO)
+         *kal.lib (+RO)
+         *l1_ext.lib (+RO)
+         *sst.lib (+RO)
+         *sst_sec.lib (+RO)
+         *sss.lib (+RO)
+         *sss_rvct*.lib (+RO)
+         *tst.lib (+RO)
+         *gdi.lib (+RO)
+         *verno.lib (+RO)
+         *j2me_hi.lib (+RO)
+         *j2me_hi_rvct.lib (+RO)
+         *dsp_ram.lib (+RO)
+         custom_emi.obj (+RO)
+         custom_config.obj (+RO)
+         custom_flash.obj (+RO)
+         custom_scatstruct.obj (+RO)
+         custom_jump_tbl.obj (+RO)
+         custom_util.obj (+RO)
+         combo_flash_nor.obj (+RO-CODE, +RO-DATA)
+         combo_flash_init.obj (+RO-CODE, +RO-DATA)
+         custom_sfi.obj (+RO-CODE, +RO-DATA)
+         gpio_setting.obj (+RO)
+         adc_channel.obj (+RO)
+         alerter_tone.obj (+RO)
+         alerterdrv.obj (+RO)
+         chr_parameter.obj (+RO)
+         custom_drv_init.obj (+RO)
+         custom_equipment.obj (+RO)
+         custom_hw_default.obj (+RO)
+         eint_def.obj (+RO)
+         exif_custom.obj (+RO)
+         gpio_drv.obj (+RO)
+         irda_custom.obj (+RO)
+         kbdmain_joystick.obj (+RO)
+         keypad_def.obj (+RO)
+         msdc_custom.obj (+RO)
+         pmic_custom.obj (+RO)
+         pwmdrv.obj (+RO)
+         touch_panel_custom.obj (+RO)
+         touch_panel_spi.obj (+RO)
+         touchpad.obj (+RO)
+         touchpad_keydef.obj (+RO)
+         tv_custom.obj (+RO)
+         uart_def.obj (+RO)
+         uem_gpio.obj (+RO)
+         usb_custom.obj (+RO)
+         usb_host_ms_custom.obj (+RO)
+         pmu_custom.obj (+RO)
+         adc_var.obj (+RO)
+         eint_var.obj (+RO)
+         gpio_var.obj (+RO)
+         uem_drv.obj (+RO)
+         pmic_drv.obj (+RO)
+         lcd.obj (+RO)
+         Ext_Charger_*.obj (+RO)
+         Ext_Cable_*.obj (+RO)
+         cs_fac_det*.obj (+RO)
+         custNFBProgressImg.obj (+RO)
+         mdi_tv.obj (+RO)
+         MiscUtils.obj (+RO)
+         ul1sm.obj (+RO)
+         bl_SC624.obj (+RO)
+         mmi_create.obj (+RO)
+         mmi_main.obj (+RO)
+         ws_fs_api.obj (+RO)
+         ext_drv_assert_hdlr_if.obj (+RO)
+         rc4_engine.obj (+RO)
+         bn_lib.obj (+RO)
+         X509.obj (+RO)
+         *drv_sec.lib (+RO)
+         drv_comm.obj (+RO-DATA)
+         tst_custom_config_misc.obj (+RO-DATA)
+         usbacm_drv.obj (+RO-DATA)
+         usbacm_adap.obj (+RO-DATA)
+         usbms_state.obj (+RO-DATA)
+         dcmgr_pl_logic.obj (+RO)
+         md5_engine.obj (+RO)
+         *sys_sec.lib (+RO)
+         dcmgr_pl_logic.obj (+RO)
+         *sys_lib_a.lib (+RO)
+         audio_service.obj (+RO)
+         gdi_2d_engine.obj (+RO)
+         bootup_logo.obj (+RO)
+         afe_common.obj (+RO)
+         audcoeff.obj (+RO)
+         AP_CSCI_static.obj (+RO)
+         AP_CSCI_dynamic.obj (+RO)
+         
+; ====== rtos-related lib ======
+         *nucleus.lib (+RO)
+         *nucleus_int.lib (+RO)
+         *nucleus_debug.lib (+RO)
+         *nucleus_v2.lib (+RO)
+         *nucleus_v2_int.lib (+RO)
+         *nucleus_v2_debug.lib (+RO)
+         *nucleus_v2_ctrl_code.lib (+RO)
+         csc.obj (+RO)
+         tcc.obj (+RO)
+         tms.obj (+RO)
+         evc.obj (+RO)
+         quc.obj (+RO)
+         pmc.obj (+RO)
+         smc.obj (+RO)
+         tct.obj (+RO)
+         
+; ====== Boot-up used ======
+         sw_keypad.obj (+RO)
+         wdt.obj (+RO)
+         
+; ====== L1_temp ======
+         m11007.obj (+RO-CODE, +RO-DATA)
+         m12171.obj (+RO-CODE, +RO-DATA)
+         
+; ====== img_med_fs_temp ======
+         *gdi_2.lib (+RO)
+         *fs.lib (+RO)
+         
+; ====== gui_wrapper_temp ======
+         gui_wrapper.obj (+RO)
+         
+; ====== Post processing ======
+         combo_lcm*.obj (+RO)
+         
+; ====== Poor compression ratio ======
+         *hanwang.lib (+RO-DATA)
+         *mre_custom.lib (+RO-DATA)
+         kmxime_latin.o (+RO-DATA)
+         
+; ====== Already compressed ======
+         CustImgGroupDataRes_0.obj (+RO)
+         CustImgGroupDataRes_1.obj (+RO)
+         CustImgGroupDataRes_2.obj (+RO)
+         CustImgGroupDataRes_3.obj (+RO)
+         FontData.obj (+RO)
+         CustStrResComp.obj (+RO)
+         CustStrMapComp.obj (+RO)
+; ============================= 
+         *    (CAT_RODATA_IMG, CAT_RODATA_ADO, CAT_RODATA_STR)
+         *    (CAT_RODATA_STR_NO_ZIMAGE)
+         *    (PRIMARY_ROCODE, PRIMARY_RODATA)
+    }
+    SINGLE_BANK_CODE 0x00000200 
+    {
+;for single bank support , certain following code need to be called by sleep manager
+         ex_hdlr.obj (SNORCODE,+First)
+         * (SNORCODE)
+         * (SNORCONST)
+    }
+    EXTSRAM 0x00002000 
+    {
+         * (NONCACHEDRW, NONCACHEDZI)
+         *deniro.lib (+RW, +ZI)
+         *fs_fig.lib (+RW, +ZI)
+    }
+    DYNAMIC_CACHEABLE_EXTSRAM_DEFAULT_NONCACHEABLE_ZI_MMIPOOL +0x1000 
+    {
+         med_main.obj (LARGEPOOL_ZI)
+         * (DYNAMICCACHEABLEZI_NC_MMIPOOL)
+    }
+    DYNAMIC_CACHEABLE_EXTSRAM_DEFAULT_NONCACHEABLE_ZI +0x0 
+    {
+         * (DYNAMICCACHEABLEZI_NC)
+    }
+    DYNAMIC_CACHEABLE_EXTSRAM_DEFAULT_NONCACHEABLE_RW +0x0 
+    {
+         * (DYNAMICCACHEABLERW_NC)
+    }
+    CACHED_EXTSRAM +0xF0001000
+    {
+
+; All RW/ZI are put in CACHED region by default
+         * (+RW, +ZI)
+         * (CACHED_EXTSRAM_RW, CACHED_EXTSRAM_ZI)
+    }
+    CACHED_EXTSRAM_NVRAM_LTABLE +0x00 
+    {
+         * (_nvram_ltable)
+         * (_indirect_init)
+         * (_fs_filetable_zi)
+         * (_nvram_callback_tbl)
+    }
+    EXTSRAM_GADGET +0x00 
+    {
+         *gadget_adp.lib (+RW, +ZI)
+         *gadget_lib.lib (+RW, +ZI)
+         *               (EXTSRAM_GADGET_RW, EXTSRAM_GADGET_ZI)
+    }
+    DYNAMIC_CACHEABLE_EXTSRAM_DEFAULT_CACHEABLE_RW +0x1000 
+    {
+         * (DYNAMICCACHEABLERW_C)
+    }
+    DYNAMIC_CACHEABLE_EXTSRAM_DEFAULT_CACHEABLE_ZI_MMIPOOL +0x0 
+    {
+         * (DYNAMICCACHEABLEZI_C_MMIPOOL)
+         * (VIDEOPOOL_C)
+    }
+    DYNAMIC_CACHEABLE_EXTSRAM_DEFAULT_CACHEABLE_ZI +0x0 
+    {
+         * (DYNAMICCACHEABLEZI_C)
+    }
+    CACHED_DUMMY_END 0xf7feb000 
+    {
+         bootarm.obj (DUMMY_POOL)
+    }
+; DSP execution regions cannot be OVERLAY; its size should be specified as 2^N, larger than 4KB, and should be 32K aligned with its start and END address
+    EXTSRAM_DSP_TX 0x07feb000 ABSOLUTE 0x6000
+    {
+         *.obj (EXTRAM_TXDATA)
+    }
+    EXTSRAM_DSP_RX 0x07ff1000 0xf000
+    {
+         *.obj (EXTRAM_RXDATA)
+    }
+    ; define an empty section to detect unsafe APIs in link time
+    SHOULDBE_EMPTYSECTION +0 0x0
+    {
+        armlibc_rt.obj (SHOULD_NOT_USED_FUNCTION)
+        armlibc_rt_heap.obj (SHOULD_NOT_USED_FUNCTION)
+        armlibc_rt_io.obj (SHOULD_NOT_USED_FUNCTION)
+        syscomp_config.obj (SHOULD_NOT_USED_RODATA)
+    }
+    EMIINIT_CODE 0x70008000 OVERLAY
+    {
+         * (EMIINITCODE, EMIINITCONST, EMIINITZI, EMIINITRW)
+    }
+    INTSRAM_CODE 0x70008000 OVERLAY 0x00001300
+    {
+; Please do NOT remove any content below!
+         * (INTSRAM_ROCODE)
+         * (INTSRAM_ROCODE_*)
+         switch8.o (+RO-CODE)
+; system-realted CODE , Extra SMALL set
+         bootarm.obj (INTERNCODE)
+         SST_intrCtrl.obj (INTERNCODE, INTERNCONST)
+; common used C library
+         memset.o (+RO-CODE, +RO-DATA)
+         rt_memclr.o (+RO-CODE, +RO-DATA)
+         callvia.o (+RO-CODE, +RO-DATA)
+         _sprintf.o (+RO-CODE, +RO-DATA)
+         rt_memcpy.o (+RO-CODE, +RO-DATA)
+         lludiv10.o (+RO-CODE, +RO-DATA)
+         rt_udiv.o (+RO-CODE, +RO-DATA)
+         uread4.o (+RO-CODE, +RO-DATA)
+         uwrite4.o (+RO-CODE, +RO-DATA)
+
+; Please do NOT remove any content above!
+    }
+    INTSRAM_DATA 0x70009300 ABSOLUTE 0x00000D00
+    {
+; Please do NOT remove any content below!
+         * (INTSRAM_RODATA, INTSRAM_RW, INTSRAM_ZI)
+         * (INTSRAM_RODATA_*, INTSRAM_RW_*, INTSRAM_ZI_*)
+; system-realted data
+         stack_init.obj (INTERNCONST, INTERNRW, INTERNZI)
+
+
+; Please do NOT remove any content above!
+    }
+
+    INTSRAM_DATA_PREINIT +0x0 0x00000D00
+    {
+; data passed from bootloader to maui
+         * (PREINIT_INTSRAM_RODATA, PREINIT_INTSRAM_RW, PREINIT_INTSRAM_ZI)
+; Please do NOT remove any content below!
+         uart.obj (INTSRAM_RODATA, INTSRAM_RW, INTSRAM_ZI)
+         *system.lib (INTSRAM_RODATA, INTSRAM_RW, INTSRAM_ZI)
+         *init.lib (INTSRAM_RODATA, INTSRAM_RW, INTSRAM_ZI)
+; system-realted data
+         bootarm.obj (STACK_POOL_INTSRAM)
+; Please do NOT remove any content above!
+    }   
+    ;INTSRAM_DUMMY_END=INTSRAM_DATA base+size (Shared with INTSRAM_DATA_PREINIT)
+    INTSRAM_DUMMY_END 0x7000A000
+    {
+         bootarm.obj (INTSRAM_END)
+    }
+    ROM_SIGNATURE_SECTION +0x0
+    {
+         *                             (MAUI_SIGNATURE_SECTION)
+    }
+}
+
+
+
+
+VIVA +0x400 0x4c
+{
+    VIVA_GFH +0x0 ; Only exist on SV5 platform
+    {
+        *                             (VIVA_GFH)
+    }
+
+    VIVA +0x0
+    {
+        *                             (VIVA)
+    }
+}
+
+
+ZIMAGE +0x0
+{
+    ZIMAGE_ER ImageLimit(DYNAMIC_CACHEABLE_EXTSRAM_DEFAULT_CACHEABLE_ZI) 
+    {
+
+;custom\system\Template\scat_config\InputSections\ZIMAGE\Common.csv
+        * (ZIMAGE_ROCODE, ZIMAGE_RODATA, ZIMAGE_RWDATA)
+        *vrt.lib (+RO-CODE, +RO-DATA)
+        l1d_data.obj (+RO-CODE)
+        l1sm.obj (+RO-CODE, +RO-DATA)
+        l1csm.obj (+RO-CODE, +RO-DATA)
+        m12100.obj (+RO-CODE, +RO-DATA)
+        m12110.obj (+RO-CODE, +RO-DATA)
+        m12120.obj (+RO-CODE, +RO-DATA)
+        m12170.obj (+RO-CODE, +RO-DATA)
+        m12160.obj (+RO-CODE, +RO-DATA)
+        m12180.obj (+RO-CODE, +RO-DATA)
+        m11301.obj (+RO-CODE, +RO-DATA)
+        m11303.obj (+RO-CODE, +RO-DATA)
+        m12168.obj (+RO-CODE, +RO-DATA)
+; ====== objectZIMAGE_dummy.list ====== 
+; ============================= 
+    }
+    ZIMAGE_DUMMY_CODE +0x0
+    {
+         *                             (+RO-CODE)
+    }
+    ZIMAGE_DUMMY_DATA +0x0
+    {
+         *                             (+RO-DATA)
+    }
+ScatterAssert(ImageLimit(ZIMAGE_ER) < ImageBase(CACHED_DUMMY_END))
+}
+
+
+
+
+

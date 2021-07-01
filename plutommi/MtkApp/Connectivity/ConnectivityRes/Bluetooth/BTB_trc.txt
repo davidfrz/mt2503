@@ -1,0 +1,26 @@
+[APP NAME] = Bluetooth
+[MODULE] = MOD_MMI_CONN_APP
+[SCOPE] = PLUTO
+
+#start trace
+TRC_MSG(SRV_BT_CM_IS_BOX, "[BTBSRV]: srv_bt_cm_is_box, addr:0x%02x:%02x:%02x:%02x:%02x:%02x, ret=%d")
+TRC_MSG(SRV_BT_CM_IS_BOX_EXT, "[BTBSRV]: srv_bt_cm_is_box_ext, cod=0x%x, name=0x%x, ret=%d")
+TRC_MSG(SRV_BT_CM_IS_MASTER, "[BTBSRV]: srv_bt_cm_is_master, ret=%d")
+TRC_MSG(SRV_BT_CM_SET_AS_MASTER, "[BTBSRV]: srv_bt_cm_set_as_master, %d")
+
+TRC_MSG(BTB_POWER, "[BTB]power_on=%d,power status=%d")
+TRC_MSG(BTB_EVENT_HDLR, "[BTB]btb_event_hdlr,evt_id=%d")
+TRC_MSG(BTB_EVENT_NOTIFY, "[BTB]btb_event_notify_handle,event=0x%x")
+TRC_MSG(BTB_INIT, "[BTB]: btb_init, handle=%d")
+TRC_MSG(BTB_DEINIT, "[BTB]: btb_deinit, handle=%d")
+TRC_MSG(BTB_CONNECT_EXT, "[BTB]: btb_connect_ext, dev_addr=0x%02x:%02x:%02x:%02x:%02x:%02x,is_connecting=%d")
+TRC_MSG(BTB_DISCONNECT, "[BTB]: btb_disconnect, source=%d")
+TRC_MSG(BTB_INQUIRY_COMPLETE, "[BTB]: btb_inquiry_complete, discoveried_dev_counter=%d,result=%d,is_cancelled=%d")
+TRC_MSG(BTB_INQUIRY_NOTIFY, "[BTB]: btb_inquiry_result_notify, index=%d,cod=%x,addr=[0x%02x:%02x:%02x:%02x:%02x:%02x],is_box=%d,name=[%x-%x-%x-%x]")
+TRC_MSG(BTB_INQUIRY_DEV, "[BTB]: btb_inquiry_dev, %d")
+TRC_MSG(BTB_CONNECT_SUCCESS, "[BTB]btb_connect_success,found source=%d,index=%d")
+TRC_MSG(BTB_PAIR_IND, "[BTB]btb_pair_ind, dev_addr=0x%02x:%02x:%02x:%02x:%02x:%02x")
+TRC_MSG(BTB_PAIR_RES, "[BTB]btb_pair_res, result=%d,dev_addr=0x%02x:%02x:%02x:%02x:%02x:%02x")
+TRC_MSG(BTB_CONNECT_RES, "[BTB]btb_connect_res, result=%d,profile_id=%x,dev_addr=0x%02x:%02x:%02x:%02x:%02x:%02x")
+TRC_MSG(BTB_DISCONNECT_IND, "[BTB]btb_disconnect_ind, profile_id=%x,dev_addr=0x%02x:%02x:%02x:%02x:%02x:%02x")
+TRC_MSG(BTB_CONNECT_A2DP_SRC_CB, "[BTB]btb_connect_a2dp_src_cb, dev_addr=0x%02x:%02x:%02x:%02x:%02x:%02x,conn_type=%d,result=%d,is_connect=%d,is_indicate=%d")

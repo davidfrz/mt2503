@@ -1,0 +1,11 @@
+
+/******************************ERROR LOG FOR STMT********************************/ 
+
+
+FileName: F:\home\mtk54439\THOR61D_DEMO_NONE(WEAR_WATCH_240X240)_WEARv1_DEV_W14.19\plutommi\MMI\TipApp\TipAppRes\ref_list_tipapp.txt
+
+The Following ENUM(s) Couldn't Be Loaded Properly:
+
+Enum Value                             Item No.In Grid
+------------------------------------------------------
+

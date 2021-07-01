@@ -1,0 +1,54 @@
+[APP NAME] = ANPAPP
+[SCOPE] = PLUTO
+[MODULE] = MOD_MMI_CONN_APP
+
+#start trace
+
+TRC_MSG(TRC_BLE_ANPAPP_CLIENT_INIT,     "[BLE_ANPAPP]client_init, mmi_anpapp_client_init()") 
+TRC_MSG(TRC_BLE_ANPAPP_BTC_SWITCH_ON,     "[BLE_ANPAPP]BT_Switch_on, mmi_bt_power_on_init_anpc()") 
+TRC_MSG(TRC_BLE_ANPAPP_BTC_SWITCH_OFF,     "[BLE_ANPAPP]BT_Switch_off, mmi_bt_power_on_deinit_anpc()")
+
+TRC_MSG(TRC_BLE_ANPAPP_READ_NEW_CNF2,     "[BLE_ANPAPP]read_new_cnf,cat_bits = [%d],cat_id = [%d]")
+TRC_MSG(TRC_BLE_ANPAPP_READ_UNREAD_CNF,     "[BLE_ANPAPP]read_unread_cnf,cat_bits = [%d],cat_id = [%d]")
+
+TRC_MSG(TRC_BLE_ANPAPP_READ_NEW_CNF_SIMPLE,     "[BLE_ANPAPP]read_new_cnf,simple alert")
+TRC_MSG(TRC_BLE_ANPAPP_READ_NEW_CNF_EMAIL,     "[BLE_ANPAPP]read_new_cnf,email")
+TRC_MSG(TRC_BLE_ANPAPP_READ_NEW_CNF_NEWS,     "[BLE_ANPAPP]read_new_cnf,news")
+TRC_MSG(TRC_BLE_ANPAPP_READ_NEW_CNF_CALL,     "[BLE_ANPAPP]read_new_cnf,call")
+TRC_MSG(TRC_BLE_ANPAPP_READ_NEW_CNF_MISSED_CALL,     "[BLE_ANPAPP]read_new_cnf,missed call")
+TRC_MSG(TRC_BLE_ANPAPP_READ_NEW_CNF_SMS_MMS,     "[BLE_ANPAPP]read_new_cnf,message")
+TRC_MSG(TRC_BLE_ANPAPP_READ_NEW_CNF_VOICE_MAIL,     "[BLE_ANPAPP]read_new_cnf,voice mail")
+TRC_MSG(TRC_BLE_ANPAPP_READ_NEW_CNF_SCHEDULE,     "[BLE_ANPAPP]read_new_cnf,schedule")
+TRC_MSG(TRC_BLE_ANPAPP_READ_NEW_CNF_HIGH_PRO,     "[BLE_ANPAPP]read_new_cnf,high priority")
+TRC_MSG(TRC_BLE_ANPAPP_READ_NEW_CNF_INSTANT,     "[BLE_ANPAPP]read_new_cnf,instant message")
+
+TRC_MSG(TRC_BLE_ANPAPP_READ_UNREAD_CNF_SIMPLE,     "[BLE_ANPAPP]read_unread_cnf,simple alert")
+TRC_MSG(TRC_BLE_ANPAPP_READ_UNREAD_CNF_EMAIL,     "[BLE_ANPAPP]read_unread_cnf,email")
+TRC_MSG(TRC_BLE_ANPAPP_READ_UNREAD_CNF_NEWS,     "[BLE_ANPAPP]read_unread_cnf,news")
+TRC_MSG(TRC_BLE_ANPAPP_READ_UNREAD_CNF_CALL,     "[BLE_ANPAPP]read_unread_cnf,call")
+TRC_MSG(TRC_BLE_ANPAPP_READ_UNREAD_CNF_MISSED_CALL,     "[BLE_ANPAPP]read_unread_cnf,missed call")
+TRC_MSG(TRC_BLE_ANPAPP_READ_UNREAD_CNF_SMS_MMS,     "[BLE_ANPAPP]read_unread_cnf,message")
+TRC_MSG(TRC_BLE_ANPAPP_READ_UNREAD_CNF_VOICE_MAIL,     "[BLE_ANPAPP]read_unread_cnf,voice mail")
+TRC_MSG(TRC_BLE_ANPAPP_READ_UNREAD_CNF_SCHEDULE,     "[BLE_ANPAPP]read_unread_cnf,schedule")
+TRC_MSG(TRC_BLE_ANPAPP_READ_UNREAD_CNF_HIGH_PRO,     "[BLE_ANPAPP]read_unread_cnf,high priority")
+TRC_MSG(TRC_BLE_ANPAPP_READ_UNREAD_CNF_INSTANT,     "[BLE_ANPAPP]read_unread_cnf,instant message")
+
+TRC_MSG(TRC_BLE_ANPAPP_ENABLE_CNF,     "[BLE_ANPAPP]Enable_cb, param->result =[%d]")
+TRC_MSG(TRC_BLE_ANPAPP_DISCONNECT_ND,     "[BLE_ANPAPP]Disconnect_ind")
+TRC_MSG(TRC_BLE_ANPAPP_CNNC_CNF,     "[BLE_ANPAPP]Connect_cb, param->result =[%d]")
+TRC_MSG(TRC_BLE_ANPAPP_READ_NEW_CNF1,     "[BLE_ANPAPP]Read_new_cnf, param->result =[%d]")
+TRC_MSG(TRC_BLE_ANPAPP_LISTEN_CNF,     "[BLE_ANPAPP]Listen_cb, param->result =[%d]")
+TRC_MSG(TRC_BLE_ANPAPP_WRITE_CP_CNF,     "[BLE_ANPAPP]write_cp_cb, param->cmd =[%d],param->result =[%d],param->category_id =[%d]")
+TRC_MSG(TRC_BLE_ANPAPP_WRITE_CP_NEW_CNF,     "[BLE_ANPAPP]write_cp_cb, param->cat_bit =[%d],param->category_id =[%d]")
+TRC_MSG(TRC_BLE_ANPAPP_WRITE_CP_UNREAD_CNF,     "[BLE_ANPAPP]write_cp_cb, param->cat_bit =[%d],param->category_id =[%d]")
+TRC_MSG(TRC_BLE_ANPAPP_CONFIG_NEW_CNF,     "[BLE_ANPAPP]config_new_alert_cb")
+TRC_MSG(TRC_BLE_ANPAPP_CONFIG_UNREAD_CNF,     "[BLE_ANPAPP]config_unread_alert_cb")
+TRC_MSG(TRC_BLE_BT_ANP_POST_EVT,     "[BLE_ANPAPP]ANP_POST_EVT done,evt_id = [%d]")
+
+TRC_MSG(TRC_BLE_ANPAPP_NEW_IND_NOTIFY,     "[BLE_ANPAPP]Read_New_Notify, param->alert_num =[%d],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x]")
+TRC_MSG(TRC_BLE_ANPAPP_UNREAD_IND_NOTIFY,     "[BLE_ANPAPP]Read_Unread_Notify, param->alert_num =[%d],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x]")
+
+TRC_MSG(TRC_BLE_ANPAPP_NEW_IND_MISSED_CALL,     "[BLE_ANPAPP]Read_New_missed_call, param->alert_num =[%d],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x]")
+TRC_MSG(TRC_BLE_ANPAPP_NEW_IND_SMS_MMS,     "[BLE_ANPAPP]Read_New_Message, param->alert_num =[%d],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x]")
+TRC_MSG(TRC_BLE_ANPAPP_UNREAD_IND_MISSED_CALL,     "[BLE_ANPAPP]Read_Unread_missed_call, param->alert_num =[%d],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x]")
+TRC_MSG(TRC_BLE_ANPAPP_UNREAD_IND_SMS_MMS,     "[BLE_ANPAPP]Read_Unread_Message, param->alert_num =[%d],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x],[%x]")

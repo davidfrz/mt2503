@@ -1,0 +1,11 @@
+[APP NAME] = HEART_RATE
+[SCOPE] = PLUTO
+[MODULE] = MOD_MMI_CONN_APP
+
+#start trace
+TRC_MSG(TRC_MMI_HR_SCRN_SHOW, "[HR]mmi_heart_rate_scrn_show, bpm = %d\n")
+TRC_MSG(TRC_MMI_HR_UPDATE_DATA, "[HR]mmi_heart_rate_update_data: bpm = %d, status = %d\n")
+TRC_MSG(TRC_MMI_HR_SEND_DATA_TO_BT, "[HR]Data sent: len = %d, result = %d\n")
+TRC_MSG(TRC_MMI_HR_SEND_DATA, "[HR]mmi_heart_rate_send_data, raw_len = %d\n")
+TRC_MSG(TRC_MMI_HR_HANDSHAKE, "[HR]Handshake rsponse, result = %d, len = %d\n")
+TRC_MSG(TRC_MMI_HR_CONNECTION_CHANGE, "[HR]BT_NOTI_CONNECTION_STATUS_CHANGE, connected = %d\n")

@@ -1,0 +1,5 @@
+Can't open the directory: ..\\..\\Customer\\Images\\FTE_SLIM240X320\\DispChar
+==Begin auto generate image resource==
+    WALLPAPER: ADD_APPLICATION_IMAGE3(31275, ..\\..\\Customer\\Images\\FTE_SLIM240X320\\MainLCD\\IdleScreen\\WallPaper\\wall01.JPG)
+                ADD_APPLICATION_IMAGE3(IMG_ID_PHNSET_ON_ANIMATION_DEFAULT=31279, path=..\\..\\Customer\\Images\\FTE_SLIM240X320\\MainLCD\\Active\\poweronoff\\logo.BMP)
+                ADD_APPLICATION_IMAGE3(IMG_ID_PHNSET_OFF_ANIMATION_DEFAULT=31280, path=..\\..\\Customer\\Images\\FTE_SLIM240X320\\MainLCD\\Active\\poweronoff\\logo.BMP)

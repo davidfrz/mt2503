@@ -1,0 +1,30 @@
+[APP NAME] = SRV_PXP
+[SCOPE] = PLUTO
+[MODULE] = MOD_MMI_CONN_APP
+
+#starttrace
+
+TRC_MSG(TRC_PRXR_FIND_UUID_BY_HANDLE,     "[PRXR] prxr_find_uuid_by_handle %x!\n") 
+TRC_MSG(TRC_PRXR_FIND_TYPE_BY_HANDLE,     "[PRXR] svc_list->type %d!\n")
+TRC_MSG(TRC_PRXR_CLEAR_REQ,     "[PRXR] prxr_clear_req!\n")
+TRC_MSG(TRC_PRXR_SERVER_REGISTER_CB,     "[PRXR] prxr_register_server_callback status %d, op_flag %d!\n")
+TRC_MSG(TRC_PRXR_CONN_ERROR,     "[PRXR] Error State %d, ignore connect ind!\n")
+TRC_MSG(TRC_PRXR_CONN_CB,     "[PRXR] prxr_connection_callback connected %d!\n")
+TRC_MSG(TRC_PRXR_FIND_IN_LIST,     "[PRXR] find in list!\n")
+TRC_MSG(TRC_PRXR_NOT_FIND_IN_LIST,     "[PRXR] not find in list!\n")
+TRC_MSG(TRC_PRXR_CONN_EXT_CB,     "[PRXR] prxr_connection_ext_callback connected %d, is_ind:%d!\n")
+TRC_MSG(TRC_PRXR_READ_CB,     "[PRXR] prxr_request_read_callback attr_handle %x, uuid %x!\n")
+TRC_MSG(TRC_PRXR_WRITE_CB,     "[PRXR] prxr_request_write_callback attr_handle %x, svc_uuid16 %x, chr_uuid16 %x!\n")
+TRC_MSG(TRC_PRXR_TYPE_ERROR,     "[PRXR] other type!\n")
+TRC_MSG(TRC_PRXR_CONFIRMATION_CB,     "[PRXR] prxr_response_confirmation_callback handle %x!\n") 
+TRC_MSG(TRC_PRXR_TXPOWER_READ_CB,     "[PRXR] prxr_read_txpower_callback status %d, tx_power %x!\n")
+TRC_MSG(TRC_PRXR_SERVICE_START_CB,     "[PRXR] prxr_service_started_callback status %d, state %d, op_flag %d!\n")
+TRC_MSG(TRC_PRXR_EMPTY_LIST,     "[PRXR] is empty service list!\n")
+TRC_MSG(TRC_PRXR_SERVICE_ADD_CB,     "[PRXR] prxr_add_services_callback status %d, state %d, op_flag %d!\n")
+TRC_MSG(TRC_PRXR_INIT,     "[PRXR] prxr_init state %d, op_flag %d!\n")
+TRC_MSG(TRC_PRXR_DEINIT,     "[PRXR] prxr_deinit state %d, op_flag %d!\n")
+TRC_MSG(TRC_PRXR_SEND_DATA,     "[PRXR] prxr_send_data ==> \n")
+TRC_MSG(TRC_PRXR_SEND_DATA_VALUE,     "[PRXR] prxr_send_data, svc_uuid16:0x%x, chr_uuid16:0x%x \n")
+TRC_MSG(TRC_PRXR_SEND_DATA_SIZE,     "[PRXR] prxr_send_data <==, send_size:%d \n")
+TRC_MSG(TRC_PRXR_DISCONNECT,     "[PRXR] prxr_disconnect !\n")
+TRC_MSG(TRC_PRXR_DISCONNECT_STATUS,     "[PRXR] find in list conn_status %d !\n") 

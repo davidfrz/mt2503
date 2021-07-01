@@ -1,0 +1,35 @@
+[APP NAME] = SRV_BAS
+[SCOPE] = PLUTO
+[MODULE] = MOD_MMI_CONN_APP
+
+#starttrace
+
+TRC_MSG(TRC_BLE_BAS_FIND_UUID,     "[BAS] bas_find_uuid_by_handle %x!\n") 
+TRC_MSG(TRC_BLE_BAS_FIND_UUID_TYPE,     "[BAS] svc_list->type %d!\n") 
+TRC_MSG(TRC_BLE_BAS_READ_CB,     "[BAS] bas_request_read_callback handle:%x, type:%d, char_id %x,des_id %x, offset %d, long %d!\n") 
+TRC_MSG(TRC_BLE_BAS_READ_RESPONSE,     "[BAS]handle:%x, type:%d, char_id %x, offset %d, battery_level %d,len %d!\n") 
+TRC_MSG(TRC_BLE_BAS_REGISTER_CB,     "[BAS] bas_register_server_callback status %x, state %d, op_flag %d!\n") 
+TRC_MSG(TRC_BLE_BAS_CONNECT_CB,     "[BAS] bas_connection_callback connected %d!\n") 
+TRC_MSG(TRC_BLE_BAS_FIND_IN_LIST,     "[BAS] find in list!\n") 
+TRC_MSG(TRC_BLE_BAS_NOT_FIND_IN_LIST,     "[BAS] not find in list!\n") 
+TRC_MSG(TRC_BLE_BAS_WRITE_CB,     "[BAS]bas_request_write_callback attr_handle %x, svc_uuid16 %x, chr_uuid16 %x, desc_uuid16 %x!\n") 
+TRC_MSG(TRC_BLE_BAS_CONNECT_FAIL,     "[BAS] Connect fail!\n") 
+TRC_MSG(TRC_BLE_BAS_WRITE_CB_VALUE,     "[BAS] value %x %d %d %d %d\n") 
+TRC_MSG(TRC_BLE_BAS_WRITE_RESPONSE_VALUE,     "[BAS]write callback:value.len %d, value->value[offset]:%d\n") 
+TRC_MSG(TRC_BLE_BAS_SERVICE_START_CB,     "[BAS] bas_service_started_callback status %d, srvc_handle %d!\n") 
+TRC_MSG(TRC_BLE_BAS_SERVICE_ADD_CB,     "[BAS] bas_add_services_callback status %d, state %d, op_flag %d!\n") 
+TRC_MSG(TRC_BLE_BAS_LIST_EMPTY,     "[BAS] is empty list!\n") 
+
+TRC_MSG(TRC_BLE_BAS_DISCONN_EVENT,     "[BAS] bas_disconnect_event_handler !\n") 
+TRC_MSG(TRC_BLE_BAS_DISCONN_EVENT_ADDR,     "[BAS] bas_disconnect_event_handler pConnCur->bdaddr %s!\n") 
+TRC_MSG(TRC_BLE_BAS_DISCONN_EVENT_STATUS,     "[BAS] find in list conn_status %d !\n") 
+TRC_MSG(TRC_BLE_BAS_RECV_EVENT,     "[BAS] bas_recv_event_handler evt->evt_id %d!\n") 
+TRC_MSG(TRC_BLE_BAS_RECV_EVENT_ADDR,     "[BAS] bas_recv_event_handler remote_addr %s!\n") 
+TRC_MSG(TRC_BLE_BAS_INIT,     "[BAS] bas_init state %d, op_flag %d!\n") 
+TRC_MSG(TRC_BLE_BAS_DEINIT,     "[BAS] bas_deinit state %d, op_flag %d!\n") 
+
+TRC_MSG(TRC_BLE_BAS_SEND_NOTI_VALUE,     "[BAS]bas_send_notification battery_level %d,len %d!\n") 
+TRC_MSG(TRC_BLE_BAS_GET_VALUE,     "[BAS] bas_get_battery_level level = %d!\n") 
+TRC_MSG(TRC_BLE_BAS_UPDATE_VALUE,     "[BAS]bas_update_battery_level battery_level %d,len %d!\n") 
+TRC_MSG(TRC_BLE_BAS_CHANGE_HANDLER,     "[BAS] bas_battery_change_handler event_id = %d!\n") 
+TRC_MSG(TRC_BLE_BAS_UT_HANDLER,     "[BAS] bas_ut_handle level = %d!\n") 

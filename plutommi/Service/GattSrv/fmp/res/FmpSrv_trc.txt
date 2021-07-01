@@ -1,0 +1,36 @@
+[APP NAME] = SRV_FMP
+[SCOPE] = PLUTO
+[MODULE] = MOD_MMI_CONN_APP
+
+#starttrace
+
+TRC_MSG(TRC_FMPL_GET_SERVICE_TYPE,     "[FMPL] get_fmp_service_type %d!\n") 
+TRC_MSG(TRC_FMPL_SERVICE_LIST_DEINIT,     "[FMPL] fmpl_service_list_deinit !\n")
+TRC_MSG(TRC_FMPL_SERVICE_LIST_INIT,     "[FMPL] fmpl_service_list_init !\n")
+TRC_MSG(TRC_FMPL_SERVICE_ADD,     "[FMPL] fmpl_service_uuid_add !\n")
+TRC_MSG(TRC_FMPL_CHAR_ADD,     "[FMPL] fmpl_char_uuid_add !\n")
+TRC_MSG(TRC_FMPL_FIND_IN_LIST,     "[FMPL] find service in list !\n")
+TRC_MSG(TRC_FMPL_FIND_SERVICE_UUID,     "[FMPL] fmpl_find_service_uuid uuid %x !\n")
+TRC_MSG(TRC_FMPL_FIND_CHAR_UUID,     "[FMPL] fmpl_find_char_uuid uuid %x !\n")
+TRC_MSG(TRC_FMPL_REGISTER_CB,     "[FMPL] fmpl_register_callback status %d state %d!\n")
+TRC_MSG(TRC_FMPL_CONNECT_CB,     "[FMPL] fmpl_connection_callback connected %d!\n")
+TRC_MSG(TRC_FMPL_NOT_FIND_IN_LIST,     "[FMPL] not find in list!\n")
+TRC_MSG(TRC_FMPL_CONNECT_EXT_CB,     "[FMPL] fmpl_connection_ext_callback connected %d, is_ind:%d!\n") 
+TRC_MSG(TRC_FMPL_SEARCH_COMPLETE_CB,     "[FMPL] fmpl_search_complete_callback status %d!\n")
+TRC_MSG(TRC_FMPL_SEARCH_RESULT_CB,     "[FMPL] fmpl_search_result_callback !\n")
+TRC_MSG(TRC_FMPL_GET_CHAR_CB,     "[FMPL] fmpl_get_characteristic_callback status %d!\n")
+TRC_MSG(TRC_FMPL_IMS_FIND_START,     "[FMPL] is immediately service find start %d!\n")
+TRC_MSG(TRC_FMPL_CHAR_WRITE_CB,     "[FMPL] fmpl_write_characteristic_callback status %d!\n")
+TRC_MSG(TRC_FMPL_IMS_WRITE_DONE,     "[FMPL] is immediately service write done!\n")
+TRC_MSG(TRC_FMPL_INIT,     "[FMPL] fmpl_init state %d!\n")
+TRC_MSG(TRC_FMPL_DEINIT,     "[FMPL] fmpl_deinit state %d!\n")
+TRC_MSG(TRC_FMPL_CONN_REQ,     "[FMPL] fmpl_connect req !\n")
+TRC_MSG(TRC_FMPL_CONN_STATUS,     "[FMPL] find in list conn_status %d !\n")
+TRC_MSG(TRC_FMPL_DISCONN_REQ,     "[FMPL] fmpl_disconnect !\n") 
+TRC_MSG(TRC_FMPL_DISCONN_STATUS,     "[FMPL] find in list conn_status %d !\n")
+TRC_MSG(TRC_FMPL_CONFIG_ALERT_LEVEL,     "[FMPL] fmpl_configAlertLevel level %d!\n")
+TRC_MSG(TRC_FMPL_ALERT,     "[FMPL] fmpl_alert state %d level %d!\n")
+TRC_MSG(TRC_FMPL_ALERT_CONN_STATUS,     "[FMPL] conn_status %d  isSupported %d !\n")
+TRC_MSG(TRC_FMPL_SERVICE_RESEARCH_CB,     "[FMPL] fmpl_research_service_callback ==> ")
+
+

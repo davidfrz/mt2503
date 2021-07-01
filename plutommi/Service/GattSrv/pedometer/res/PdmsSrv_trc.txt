@@ -1,0 +1,34 @@
+[APP NAME] = SRV_PDMS
+[SCOPE] = PLUTO
+[MODULE] = MOD_MMI_CONN_APP
+
+#starttrace
+
+TRC_MSG(TRC_PDMS_FIND_UUID_BY_HANDLE,     "[PDMS] pdms_find_uuid_by_handle %x!\n") 
+TRC_MSG(TRC_PDMS_FIND_UUID_TYPE,     "[PDMS] svc_list->type %d!\n") 
+TRC_MSG(TRC_PDMS_READ_CB,     "[PDMS] pdms_request_read_callback handle:%x, type:%d, uuid %x, offset %d, long %d!\n") 
+TRC_MSG(TRC_PDMS_READ_CB_END,     "[PDMS] pdms_request_read_callback -!\n") 
+TRC_MSG(TRC_PDMS_REGISTER_CB,     "[PDMS] pdms_register_server_callback status %x, state %d, op_flag %d!\n") 
+TRC_MSG(TRC_PDMS_REGISTER_CB_END,     "[PDMS] pdms_register_server_callback -!\n")
+TRC_MSG(TRC_PDMS_CONNECT_CB,     "[PDMS] pdms_connection_callback connected %d!\n") 
+TRC_MSG(TRC_PDMS_FIND_IN_LIST,     "[PDMS] find in list!\n") 
+TRC_MSG(TRC_PDMS_NOT_FIND_IN_LIST,     "[PDMS] not find in list!\n") 
+TRC_MSG(TRC_PDMS_WRITE_CB,     "[PDMS]pdms_request_write_callback attr_handle %x, svc_uuid16 %x, chr_uuid16 %x!\n") 
+TRC_MSG(TRC_PDMS_CONNECT_FAIL,     "[PDMS] pdms_request_write_callback doesn't connected!\n") 
+TRC_MSG(TRC_PDMS_WRITE_VALUE,     "[PDMS] value %x %d %d %d %d") 
+TRC_MSG(TRC_PDMS_SERVICE_START_CB,     "[PDMS] pdms_service_started_callback status %d, srvc_handle %d!\n") 
+TRC_MSG(TRC_PDMS_SERVICE_ADD_CB,     "[PDMS] pdms_add_services_callback status %d, state %d, op_flag %d!\n") 
+TRC_MSG(TRC_PDMS_LIST_EMPTY,     "[PDMS] is empty service list!\n") 
+TRC_MSG(TRC_PDMS_INIT,     "[PDMS] pdms_init state %d, op_flag %d!\n") 
+TRC_MSG(TRC_PDMS_DEINIT,     "[PDMS] pdms_deinit state %d, op_flag %d!\n") 
+TRC_MSG(TRC_PDMS_DISCONN_EVENT_HANDLER,     "[PDMS] pdms_disconnect_event_handler !\n") 
+TRC_MSG(TRC_PDMS_DISCONN_EVENT_ADDR,     "[PDMS] pdms_disconnect_event_handler pConnCur->bdaddr %s!\n") 
+TRC_MSG(TRC_PDMS_SEND_DATA,     "[PDMS] pdms_send_data buf:%x, size:%d !\n")
+TRC_MSG(TRC_PDMS_DISCONN_EVENT_STATUS,     "[PDMS] find in list conn_status %d !\n") 
+TRC_MSG(TRC_PDMS_RECV_EVENT_HANDLER,     "[PDMS] pdms_recv_event_handler evt->evt_id %d!\n") 
+TRC_MSG(TRC_PDMS_RECV_EVENT_ADDR,     "[PDMS] pdms_recv_event_handler remote_addr %s!\n") 
+
+
+
+
+
