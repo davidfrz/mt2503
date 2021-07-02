@@ -5697,6 +5697,14 @@ LINE_IN_SUPPORT = FALSE
 
 MEGAPHONE_SUPPORT = FALSE
 
+#------------------------------------------------------------------------##
+# 初始宏定义要在 include make\MODEM.mak 这句话前面
+#------------------intell mob terminal add begin here
+
+INTELL_MOB_TER_APP=TRUE
+
+#------------------custom add end
+#------------------------------------------------------------------------##
 
 # *************************************************************************
 # Release Setting Section

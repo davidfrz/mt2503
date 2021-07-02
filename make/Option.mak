@@ -12189,7 +12189,7 @@ ifeq ($(strip $(NVRAM_BACKUP_PARTITION_ON_NOR)),ENABLE)
       DEPENDENCY_CONFLICT = TRUE
     endif
     ifeq ($(strip $(SERIAL_FLASH_SUPPORT)),FALSE)
-      $(warning ERROR: when SERIAL_FLASH_SUPPORT=FALSE �ANVRAM_BACKUP_PARTITION_ON_NOR must be FALSE.)
+      $(warning ERROR: when SERIAL_FLASH_SUPPORT=FALSE �ANVRAM_BACKUP_PARTITION_ON_NOR must be FALSE.)
       DEPENDENCY_CONFLICT = TRUE
     endif
     COM_DEFS  += __NOR_SUPPORT_RAW_DISK__ __SYSDRV_BACKUP_DISK__ __SYSDRV_BACKUP_DISK_RAW__ __NVRAM_BACKUP_PARTITION__ __AT_BACKUP_DATA_SUPPORT__
@@ -13691,3 +13691,28 @@ ifeq ($(strip $(CUSTOM_RELEASE)),TRUE)
     RELEASE_LEVEL = SUB_RELEASE
   endif
 endif
+
+
+#---------------------__INTELL_MOB_TER_APP__------------------#
+#---------------------intellapp begin
+
+#***********************************************************
+# 功能宏
+# 两个endif成对出现，QAQ
+# ifeq ($(strip$(INTELL_MOB_TER_APP)),TRUE) 这句话就是
+# 宏开关的定义 如果前面宏开关定义了，并且值等于true
+# 就执行下面的话
+# ----------***--------
+#  CUS_REL_BASE_COMP +=make\intellapp 这个定义模块必须全部是小写
+# 并且指定了make文件的位置，要新建一个文件夹，文件夹名不区分大小写
+#***********************************************************
+ifdef INTELL_MOB_TER_APP
+      ifeq ($(strip$(INTELL_MOB_TER_APP)),TRUE)
+              COMPLIST += intellapp
+              CUS_REL_BASE_COMP +=make\intellapp
+              COM_DEFS +=__INTELL_MOB_TER_APP__
+      endif
+endif
+#---------------------intellapp end
+#----------------------------------------##
+
