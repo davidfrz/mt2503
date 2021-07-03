@@ -83,6 +83,10 @@ extern "C"
     typedef enum
     {
         NVRAM_EF_PHONY_LID = NVRAM_LID_CUST_BEGIN,
+        /*添加nvram宏定义*/
+        #if defined(__INTELL_MOB_TER_APP__)
+        NVRAM_EF_INTELL_LID,
+        #endif
 
         /* Don't remove this line: insert LID definition above */
         NVRAM_EF_LAST_LID_CUST
@@ -95,12 +99,34 @@ extern "C"
 #define NVRAM_PHONY_SIZE    0
 #define NVRAM_PHONY_TOTAL   0
 
+#if defined(__INTELL_MOB_TER_APP__)
+typedef struct
+{
+    kal_uint16 xxx_count;
+}stu_intell_nvram;/*nv 要存储的东西*/
+
+#define NVRAM_EF_INTELL_SIZE (sizeof(stu_intell_nvram)) /*数据类型大小*/
+#define NVRAM_EF_INTELL_TOTAL 1                         /*数据的个数*/
+#endif 
+
+/*size 和 total不能等于0，否则分配内存会发生死机*/
+#if defined(__INTELL_MOB_TER_APP__)
+#define NVRAM_PHONY_SIZE 1
+#define NVRAM_PHONY_TOTAL 1 
+#else
+#define NVRAM_PHONY_SIZE 0
+#define NVRAM_PHONY_TOTAL 0
+#endif
+
+
 /* Don't remove this line: insert size and total definition above */
 
 /* DO NOT MOVE OR REMOVE THIS HEADER */
 #ifndef __OPTR_NONE__
 #include "op_nvram_user_defs.h"
 #endif
+
+
 
 #ifdef __cplusplus
 }

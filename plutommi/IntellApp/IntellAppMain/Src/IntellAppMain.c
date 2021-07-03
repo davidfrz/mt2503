@@ -5,6 +5,27 @@
 #include "GlobalResDef.h"
 #include "IntellAppMain.h"
 #include "mmi_cb_mgr_gprot.h"
+#include "nvram_user_defs.h"
+
+/*存储简单数据-NVRAM*/
+/*把这个函数放在想记录的地方*/
+void mmi_intell_nvram(void){
+    S16 error = 0;
+    U8 simple_nvram = 0;
+    stu_intell_nvram nvram_date={0x00};
+    
+    ReadValue(NVRAM_INTELLAPP_ID,&simple_nvram,DS_BYTE,&error);/*读NV*/
+    simple_nvram += 1;
+    WriteValue(NVRAM_INTELLAPP_ID,&simple_nvram,DS_BYTE,&error);/*写NV*/
+
+    /*复杂结构读写*/
+    ReadRecord(NVRAM_EF_INTELL_LID,1,&nvram_date,NVRAM_EF_INTELL_SIZE,%error);
+    nvram_date.xxx_count += 1;
+    WriteRecord(NVRAM_EF_INTELL_LID,1,&nvram_date,NVRAM_EF_INTELL_SIZE,%error);
+
+
+}
+
 
 /*创建删除文件夹*/
 void mtk_intell_filemanager(void){
