@@ -6,6 +6,25 @@
 #include "IntellAppMain.h"
 #include "mmi_cb_mgr_gprot.h"
 #include "nvram_user_defs.h"
+#include "SmsSrvGprot.h"
+
+/*下面所有的成块函数都可以直接放在mainmenu.c 中的 
+goto_main_menu中运行，当然要用一个集成SetKey*/
+
+
+void mmi_send_sms_callback(srv_sms_callback_struct* callback_data)
+{
+    kal_prompt_trace(MOD_XDM,"--%d(%d)--%s--",__LINE__,callback_data->result,__FILE__);
+
+}
+/*发送短信 调用这个函数*/
+void mmi_intell_send_sms(void)
+{
+    srv_sms_send_ucs2_text_msg(L"hello world",L"15613323375",SRV_SMS_SIM_1,mmi_send_sms_callback,NULL);
+}
+
+
+
 
 /*存储简单数据-NVRAM*/
 /*把这个函数放在想记录的地方*/
@@ -52,6 +71,7 @@ void mtk_intell_filemanager(void){
     FS_Close(file_handle);/*关闭文件*/
 }
 
+/*播放音乐，铃声*/
 void mmi_intell_audio_play(void){
     /*----------------------------------*/
     /*本地变量                          */
@@ -116,6 +136,8 @@ void intellapp(void){
     // gui_print_text(L"Hello World!");
 
     gui_BLT_double_buffer(0,0,UI_DEVICE_WIDTH,UI_DEVICE_HEIGHT); // 如果带有屏幕测试（实机），必须加上这句话，刷新屏幕
+
+    /*这里可以控制按键来实现发送短信*/
 
     
 }
