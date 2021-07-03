@@ -1,6 +1,29 @@
 #ifndef __INTELLMOBTERAPP_H__
 #define __INTELLMOBTERAPP_H__
 #if defined(__INTELL_MOB_TER_APP__)
+#include "MMIDataType.h"
+
+/*消息资源id*/
+typedef enum
+{
+    EVT_ID_SRV_INTELLAPP_MSG_IND=APP_INTELL_BASE
+    EVT_ID_SRV_INTELLAPP_MSG_MAX
+}srv_intell_msg_id;
+
+/*消息类型*/
+typedef enum
+{
+    SRV_INTELLAPP_MSG_NONE=0,
+    SRV_INTELLAPP_MSG_MSGSEND,
+    SRV_INTSLLAPP_MSG_MAX
+}srv_intsll_msg_type;
+
+/*消息数据*/
+typedef struct
+{
+    MMI_EVT_PARAM_HEADER
+    U8 type;
+}stu_intell_msg_data;
 
 extern void intellapp();
 #endif

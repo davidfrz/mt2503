@@ -1,6 +1,24 @@
 #if defined(__INTELL_MOB_TER_APP__)
 #include "gui_themes.h"
+#include "mmi_rp_app_intell_def.h"
+#include "mmi_frm_scenario_gprot.h"
+#include "GlobalResDef.h"
+#include "IntellAppMain.h"
+#include "mmi_cb_mgr_gprot.h"
+
+
+void intellapp_exit(void){
+
+}
+
 void intellapp(void){
+
+
+    //入屏函数
+    mmi_frm_scrn_enter(GRP_ID_ROOT,SCR_ID_INTELL_APP,intellapp_exit,intellapp,MMI_FRM_FULL_SCRN);
+
+
+
     // 这句话是在控制台输出，不能在实机或者实际模拟器输出
     // printf("Hello World");
     
@@ -30,5 +48,31 @@ void intellapp(void){
 
     
 }
+/*发送消息*/
+void msg_send(void){
+    stu_intell_msg_data evt={0x00};
 
+    /*发送消息*/
+    MMI_FRM_INIT_EVENT(&evt,EVT_ID_SRV_INTELLAPP_MSG_IND);
+    evt.type=SRV_INTELLAPP_MSG_MSGSEND;/*消息类型*/
+    MMI_FRM_CB_EMIT_POST_EVENT((mmi_event_struct*)&evt);
+    /*某个处理函数*/
+}
+/*消息处理函数*/
+mmi_ret mmi_intell_msg_proc(mmi_event_struct *evt)
+{
+    stu_intell_msg_data *event=(stu_intell_msg_data*)evt;
+
+    if(EVT_ID_SRV_INTELLAPP_MSG_IND == evt->evt_id)
+    {
+        if(SRV_INTELLAPP_MSG_MSGSEND == event->type)/*处理这个东西的函数*/
+        {
+            //可以打印字符
+            //可以干啥干啥的
+            //就是说 当执行了SRV_INTELLAPP_MSG_MSGSEND
+            //这里定义后续处理
+            //类似于触发事件
+        }
+    }
+}
 #endif
