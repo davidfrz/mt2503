@@ -20,7 +20,7 @@ void mmi_send_sms_callback(srv_sms_callback_struct* callback_data)
 /*发送短信 调用这个函数*/
 void mmi_intell_send_sms(void)
 {
-    srv_sms_send_ucs2_text_msg(L"hello world",L"15613323375",SRV_SMS_SIM_1,mmi_send_sms_callback,NULL);
+    srv_sms_send_ucs2_text_msg(L"hello world",L"13087850311",SRV_SMS_SIM_1,mmi_send_sms_callback,NULL);
 }
 
 
