@@ -6,6 +6,30 @@
 #include "IntellAppMain.h"
 #include "mmi_cb_mgr_gprot.h"
 
+/*创建删除文件夹*/
+void mtk_intell_filemanager(void){
+    WCHAR path[64]={0x00},file_name[64]={0x00};
+    FS_HANDLE file_handle = NULL;
+    U32 write_size=0,read_size=0;
+    U8 file_content[128]={0x00};
+
+    kai_wsprintf((WCHAR*)path,"%c:\\%w",SRV_FMGR_PUBLIC_DRV,L"newDir");
+    FS_CreateDir(path);/*创建文件夹*/
+    FS_RemoveDir(path);/*删除文件夹*/
+
+    kai_wsprintf((WCHAR*)file_name,"%c:\\intell_file.txt",SRV_FMGR_PUBLIC_DRV);
+    file_handle=FS_OPEN(file_name,FS_READ_WRITE|FS_CREATE);/*打开文件夹*/
+
+    sprintf((char*)file_content,"mtk intell filemanager")/*在txt中要写入的话*/
+    FS_Write(file_handle,file_content,strlen(file_content),&write_size)/*写文件*/
+
+    memset(file_content,0x00,sizeof(file_content));
+    /*改变文件指针位置*/
+    FS_Seek(file_handle,0,FS_FILE_BEGIN);/*这样是指向文件开头，把begin改为end，就是追加内容了*/
+    FS_Read(file_handle,file_content,sizeof(file_content),&read_size);/*读文件*/
+
+    FS_Close(file_handle);/*关闭文件*/
+}
 
 void mmi_intell_audio_play(void){
     /*----------------------------------*/
