@@ -7,8 +7,33 @@
 #include "mmi_cb_mgr_gprot.h"
 
 
-void intellapp_exit(void){
+void mmi_intell_audio_play(void){
+    /*----------------------------------*/
+    /*本地变量                          */
+    /*----------------------------------*/
+    mdi_result play_result=MDI_AUDIO_FAIL;
+    U32 audio_len=0;
+    U8 *audio_data=NULL,audio_type=0;
 
+
+    /*----------------------------------*/
+    /*代码方法体                          */
+    /*----------------------------------*/
+    audio_data = get_audio(AUD_MY_MUSIC_ID,&audio_type,&audio_len);
+    play_result = mdi_audio_play_string_with_vol_path(
+        (void*)audio_data,
+        audio_len,
+        audio_type,
+        DEVICE_AUDIO_PLAY_ONCE,
+        NULL,
+        NULL,
+        MDI_AUD_VOL_MUTE(MDI_AUD_VOL_6),
+        MDI_AUD_PTH_EX(MDI_DEVICE_SPEAKER_BOTH)
+    );
+}
+
+void intellapp_exit(void){
+    mdi_audio_stop_all();
 }
 
 void intellapp(void){
@@ -22,7 +47,8 @@ void intellapp(void){
     // 这句话是在控制台输出，不能在实机或者实际模拟器输出
     // printf("Hello World");
     
-
+    /*播放背景音乐*/
+    //mmi_intell_audio_play();
 
     // 在实机或者实际模拟器输出
     // U为unsigned 那些符号 同理 S为signed
@@ -75,4 +101,7 @@ mmi_ret mmi_intell_msg_proc(mmi_event_struct *evt)
         }
     }
 }
+
+
+
 #endif
