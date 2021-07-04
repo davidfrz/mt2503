@@ -359,4 +359,9 @@ endif
 ifneq ($(filter __INTELL_MOB_TER_APP__ , $(strip $(MODULE_DEFS))),)
    INC_DIR += plutommi\IntellApp\IntellAppMain\Inc
    SRC_LIST += plutommi\IntellApp\IntellAppMain\Src\IntellAppMain.c
+   ifneq ($(filter _MMI_INTELL_SOCKET_,$(strip $(MODULE_DEFS))),) # 添加socket app应用
+      INC_DIR += plutommi\IntellApp\Socket\Inc
+      SRC_LIST += plutommi\IntellApp\Socket\Src\Socket.c
+   endif
 endif
+

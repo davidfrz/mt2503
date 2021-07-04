@@ -7,6 +7,7 @@
 #include "mmi_cb_mgr_gprot.h"
 #include "nvram_user_defs.h"
 #include "SmsSrvGprot.h"
+#include "Socket.h"
 
 /*下面所有的成块函数都可以直接放在mainmenu.c 中的 
 goto_main_menu中运行，当然要用一个集成SetKey*/

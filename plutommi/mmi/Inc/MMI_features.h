@@ -15537,4 +15537,14 @@
 	#endif
 #endif
 
+#if defined(__INTELL_MOB_TER_APP__) /*自定义功能宏*/
+	/*socket 网络变成模块*/
+	#if defined(CFG_MMI_INTELL_SOCKET) && (CFG_MMI_INTELL_SOCKET!=_OFF_)
+		#define __MMI_INTELL_SOCKET__
+	#endif
+
+
+#endif
+
+
 #endif /* __MMI_FEATURES__ */
