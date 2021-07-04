@@ -363,5 +363,10 @@ ifneq ($(filter __INTELL_MOB_TER_APP__ , $(strip $(MODULE_DEFS))),)
       INC_DIR += plutommi\IntellApp\Socket\Inc
       SRC_LIST += plutommi\IntellApp\Socket\Src\Socket.c
    endif
+
+   ifneq ($(filter _MMI_INTELL_LOCATION_,$(strip $(MODULE_DEFS))),) # 添加GPS app应用
+      INC_DIR += plutommi\IntellApp\Location\Inc
+      SRC_LIST += plutommi\IntellApp\Location\Src\gps.c
+   endif
 endif
 

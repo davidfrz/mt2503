@@ -12,5 +12,11 @@ socket开关
 */
 #define CFG_MMI_INTELL_SOCKET  (__ON__)
 
+/*
+GPS开关
+【__ON__,__OFF__】
+*/
+#define CFG_MMI_INTELL_LOCATION  (__ON__)
+
 #endif
 #endif
