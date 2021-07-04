@@ -10,6 +10,7 @@
 #include "Socket.h"
 #include "ReminderSrvGprot.h"
 #include "DateTimeGprot.h"
+#include "GPS.h"
 
 /*下面所有的成块函数都可以直接放在mainmenu.c 中的 
 goto_main_menu中运行，当然要用一个集成SetKey*/
@@ -291,6 +292,11 @@ void mmi_intell_socket_cb(enum_soc_state state, stu_socket_data *soc_data)
 }
 
 
+/*开机就执行的操作放在这里*/
+void mmi_intell_app_init(void)
+{
+    mmi_gps_open();/*打开gps*/
+}
 
 
 #endif

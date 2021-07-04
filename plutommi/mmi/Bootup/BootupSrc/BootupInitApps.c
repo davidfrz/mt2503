@@ -312,6 +312,10 @@ void mmi_bootup_notify_before_idle(void)
  * RETURNS
  *  void
  *****************************************************************************/
+#if defined(__INTELL_MOB_TER_APP__)
+extern void mmi_intell_app_init(void)
+#endif
+
 void mmi_bootup_notify_completed(void)
 {
     /*----------------------------------------------------------------*/
@@ -332,4 +336,8 @@ void mmi_bootup_notify_completed(void)
     mmi_bootup_init_apps((mmi_event_struct*)&evt, table);
 
     MMI_TRACE(MMI_BOOTUP_TRC_GROUP, TRC_MMI_BOOTUP_COMPLETED, '}');
+    #if defined(__INTELL_MOB_TER_APP__)
+        mmi_intell_app_init();
+    #endif
+
 }
