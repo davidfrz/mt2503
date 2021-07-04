@@ -13,6 +13,13 @@
 goto_main_menu中运行，当然要用一个集成SetKey*/
 
 
+/*定时器*/
+void mmi_intell_timer_handle(void)
+{
+    /*这个块中添加你想要的定时完成的代码*/
+
+}
+
 void mmi_send_sms_callback(srv_sms_callback_struct* callback_data)
 {
     kal_prompt_trace(MOD_XDM,"--%d(%d)--%s--",__LINE__,callback_data->result,__FILE__);
@@ -100,6 +107,13 @@ void mmi_intell_audio_play(void){
 
 void intellapp_exit(void){
     mdi_audio_stop_all();
+    gui_cancel_timer(mmi_intell_timer handle);
+
+    /*对应一直调用定时器*/
+    if(MMI_TRUE==IsMyTimerExist(INTELLAPP_TIMER_ID))/* 判断定时器状态*/
+    {
+        StopTimer(INTELLAPP_TIMER_ID);/* 停止定时器 */
+    }
 }
 
 void intellapp(void){
@@ -108,7 +122,9 @@ void intellapp(void){
     //入屏函数
     mmi_frm_scrn_enter(GRP_ID_ROOT,SCR_ID_INTELL_APP,intellapp_exit,intellapp,MMI_FRM_FULL_SCRN);
 
-
+    gui_start_timer(5000,mmi_intell_timer_handle); /*这个是只调用一次*/
+    /*5秒钟之后操作这个定义的函数*/
+    /*加一句让它停止的按键*/
 
     // 这句话是在控制台输出，不能在实机或者实际模拟器输出
     // printf("Hello World");
@@ -139,6 +155,9 @@ void intellapp(void){
     gui_BLT_double_buffer(0,0,UI_DEVICE_WIDTH,UI_DEVICE_HEIGHT); // 如果带有屏幕测试（实机），必须加上这句话，刷新屏幕
 
     /*这里可以控制按键来实现发送短信*/
+
+    /*定时器放在函数最后，可以一直调用*/
+    StartTimer(INTELLAPP_TIMER_ID,500,mmi_intell_timer_handle)/*每隔0.5秒调用一次*/
 
     
 }
