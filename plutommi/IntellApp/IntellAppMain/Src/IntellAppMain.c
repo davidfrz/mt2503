@@ -29,6 +29,9 @@ mmi_ret mmi_intell_reminder_proc(mmi_event_struct *evt)
     srv_reminder_evt_struct *reminder_evt = (srv_reminder_evt_struct*)evt;
     MYTIME curr_time={0x00};
     U8 dt_str[64]={0x00};
+    /*每隔一分钟获取一次gps，短信发送到手机上*/
+    U8 soc_data[64] = {0x00}, location_data[256]= {0x00}, temp[128]={0x00}; 
+    stu_gps_data *gps_data=NULL;
 
     if (reminder_evt->reminder_type != SRV_REMINDER_TYPE_INTELLAPP
     && reminder_evt->reminder_type != SRV_REMINDER_TYPE_TOTAL)  
@@ -48,11 +51,22 @@ mmi_ret mmi_intell_reminder_proc(mmi_event_struct *evt)
                 GetDateTime(&curr_time);
                 // kal_wsprintf((WCHAR*)dt_str,"%04d/%02d/%02d %02d/%02d", curr_time.nYear, 
                 // curr_time.nMonth, curr_time.nDay, curr_time.nHour, curr_time.nMin); 
-                sprintf(soc_data, "intell socket %04d/%02d/%02d %02d:%02d:%02d", 
-                curr_time.nYear, curr_time.nMonth, curr_time.nDay, curr_time.nHour, curr_time.nMin, curr_time.nSec);
-                /*这里添加功能模块*/
-                mmi_socket_set_callback(mmi_intell_socket_cb);/*设置 socket 回调函数*/
-                mmi_socket_send_data(MMI_SIM1, soc_data, strlen(soc_data)); 
+                // sprintf(soc_data, "intell socket %04d/%02d/%02d %02d:%02d:%02d", 
+                /*gps*/
+                gps_data = mmi_gps_get_data();
+                sprintf((char*)temp, "gps(%f, %f)", gps_data->latitude, gps_data->longitude);
+                mmi_asc_to_ucs2((S8*)location_data, (S8*)temp); 
+                srv_sms_send_ucs2_text_msg((char*)location_data, (char*)L"13087850311",
+                        SRV_SMS_SIM_1, mmi_send_sms_callback, NULL); 
+                if( 0 != gps_data->latitude*10000 && 0 != gps_data->longitude*10000)
+                {
+                    mmi_gps_close();
+                }
+                
+                // curr_time.nYear, curr_time.nMonth, curr_time.nDay, curr_time.nHour, curr_time.nMin, curr_time.nSec);
+                // /*这里添加功能模块*/
+                // mmi_socket_set_callback(mmi_intell_socket_cb);/*设置 socket 回调函数*/
+                // mmi_socket_send_data(MMI_SIM1, soc_data, strlen(soc_data)); 
                 mmi_set_reminder_time();
                 break;
 
