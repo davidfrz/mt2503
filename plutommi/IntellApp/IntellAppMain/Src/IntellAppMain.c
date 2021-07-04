@@ -14,6 +14,13 @@
 /*下面所有的成块函数都可以直接放在mainmenu.c 中的 
 goto_main_menu中运行，当然要用一个集成SetKey*/
 
+/*
+Socket初始化函数socket_socket_init在开机的时候就应该执行，
+我们可以把它放在 mmi_mystudy_reminder_proc 函数的 SRV_REMINDER_NOTIFY_INIT 消息中调用，
+也可以放 在 plutomnii\mmi\Bootup\BootupSrc\BootupInitApps.c 文件的 mmi_bootup_notify_completed函数中调用，
+这个函数每次系统开机完成之后都会执行。
+*/
+
 
 /*reminder定时器*/
 mmi_ret mmi_intell_reminder_proc(mmi_event_struct *evt)
@@ -31,13 +38,21 @@ mmi_ret mmi_intell_reminder_proc(mmi_event_struct *evt)
     switch (reminder_evt->notify)
     {
         case SRV_REMINDER_NOTIFY_INIT:/*初始化*/ 
-            break;
+            {
+                socket_socket_init(); /*socket 初始化，通常也可以放在 mmi_bootup_notify_completed函数中调用*/
+                break;
+            }
         case SRV_REMINDER_NOTIFY_EXPIRY:/*触发*/ 
             {
                 GetDateTime(&curr_time);
-                kal_wsprintf((WCHAR*)dt_str,"%04d/%02d/%02d %02d/%02d", curr_time.nYear, 
-                curr_time.nMonth, curr_time.nDay, curr_time.nHour, curr_time.nMin); 
+                // kal_wsprintf((WCHAR*)dt_str,"%04d/%02d/%02d %02d/%02d", curr_time.nYear, 
+                // curr_time.nMonth, curr_time.nDay, curr_time.nHour, curr_time.nMin); 
+                sprintf(soc_data, "intell socket %04d/%02d/%02d %02d:%02d:%02d", 
+                curr_time.nYear, curr_time.nMonth, curr_time.nDay, curr_time.nHour, curr_time.nMin, curr_time.nSec);
                 /*这里添加功能模块*/
+                mmi_socket_set_callback(mmi_intell_socket_cb);/*设置 socket 回调函数*/
+                mmi_socket_send_data(MMI_SIM1, soc_data, strlen(soc_data)); 
+                mmi_set_reminder_time();
                 break;
 
             }
@@ -252,6 +267,29 @@ mmi_ret mmi_intell_msg_proc(mmi_event_struct *evt)
         }
     }
 }
+
+void mmi_intell_socket_cb(enum_soc_state state, stu_socket_data *soc_data)
+{
+    if(NULL == soc_data)
+    {
+        return;
+    }
+    switch(state)
+    {
+        case SOC_SEND_SUCCESS:/*socket 发送成功*/
+        {
+            kal_prompt_trace(MOD_XDM, "--%d(%s)--%s--",_LINE_, soc_data->send_data_buff,_FILE_);
+            break;
+        }
+        
+        case SOC_RECV_SUCCESS:/*socket 接收成功*/
+        {
+            kal_prompt_trace(MOD_XDM, "--%d(%s)--%s--",_LINE_, soc_data->recv_data_buff,_FILE_);
+            break;
+        }
+    }
+}
+
 
 
 
