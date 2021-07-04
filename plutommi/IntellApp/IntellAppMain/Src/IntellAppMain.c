@@ -8,9 +8,67 @@
 #include "nvram_user_defs.h"
 #include "SmsSrvGprot.h"
 #include "Socket.h"
+#include "ReminderSrvGprot.h"
+#include "DateTimeGprot.h"
 
 /*下面所有的成块函数都可以直接放在mainmenu.c 中的 
 goto_main_menu中运行，当然要用一个集成SetKey*/
+
+
+/*reminder定时器*/
+mmi_ret mmi_intell_reminder_proc(mmi_event_struct *evt)
+{
+    srv_reminder_evt_struct *reminder_evt = (srv_reminder_evt_struct*)evt;
+    MYTIME curr_time={0x00};
+    U8 dt_str[64]={0x00};
+
+    if (reminder_evt->reminder_type != SRV_REMINDER_TYPE_INTELLAPP
+    && reminder_evt->reminder_type != SRV_REMINDER_TYPE_TOTAL)  
+    {
+        return MMI_RET_OK;
+    }
+
+    switch (reminder_evt->notify)
+    {
+        case SRV_REMINDER_NOTIFY_INIT:/*初始化*/ 
+            break;
+        case SRV_REMINDER_NOTIFY_EXPIRY:/*触发*/ 
+            {
+                GetDateTime(&curr_time);
+                kal_wsprintf((WCHAR*)dt_str,"%04d/%02d/%02d %02d/%02d", curr_time.nYear, 
+                curr_time.nMonth, curr_time.nDay, curr_time.nHour, curr_time.nMin); 
+                /*这里添加功能模块*/
+                break;
+
+            }
+        case SRV_REMINDER_NOTIFY_REINIT:/*更新*/ 
+            break;/*要实现更新 可以再这里放入mmi_set_reminder_time*/
+        case SRV_REMINDER_NOTIFY_DEINIT:/* 销毁 */ 
+            break; 
+    }
+    return MMI_RET_OK;
+}
+
+void mmi_reset_reminder_time(void)
+{
+    srv_reminder_notify_finish(MMI_TRUE);/*设置 reminder 消息提醒状态为 true*/ 
+    srv_reminder_cancel(SRV_REMINDER_TYPE_INTELLAPP, 0);/*取消 reminder 消息*/
+}
+
+void mmi_set_reminder_time(void)
+{
+    MYTIME reminder_time={0x00};
+    U32 datetime_sec = 0;
+
+    GetDateTime(&reminder_time);/* 获取系统当前时间 */
+    datetime_sec = mmi_dt_mytime_2_utc_sec(&reminder_time, MMI_FALSE);/*将时间转换成 时间戳*/
+
+    mmi_dt_utc_sec_2_mytime(datetime_sec+60, &reminder_time, MMI_FALSE);/* 时间戳加 60 秒，再转换成时间*/
+
+    srv_reminder_notify_finish(MMI_FALSE);/*设置 reminder 提醒结束状态为 false*/ 
+    srv_reminder_cancel(SRV_REMINDER_TYPE_INTELLAPP,0);
+    srv_reminder_set(SRV_REMINDER_TYPE_INTELLAPP, &reminder_time, 0); /*设置定时器 响应时间*/
+}
 
 
 /*定时器*/
@@ -114,6 +172,7 @@ void intellapp_exit(void){
     {
         StopTimer(INTELLAPP_TIMER_ID);/* 停止定时器 */
     }
+    mmi_reset_reminder_time();
 }
 
 void intellapp(void){
@@ -122,8 +181,10 @@ void intellapp(void){
     //入屏函数
     mmi_frm_scrn_enter(GRP_ID_ROOT,SCR_ID_INTELL_APP,intellapp_exit,intellapp,MMI_FRM_FULL_SCRN);
 
-    gui_start_timer(5000,mmi_intell_timer_handle); /*这个是只调用一次*/
+    // gui_start_timer(5000,mmi_intell_timer_handle); /*这个是只调用一次*/ 
+    /*与最后的reminder看用哪个定时器*/
     /*5秒钟之后操作这个定义的函数*/
+
     /*加一句让它停止的按键*/
 
     // 这句话是在控制台输出，不能在实机或者实际模拟器输出
@@ -158,6 +219,9 @@ void intellapp(void){
 
     /*定时器放在函数最后，可以一直调用*/
     StartTimer(INTELLAPP_TIMER_ID,500,mmi_intell_timer_handle)/*每隔0.5秒调用一次*/
+
+    /*reminder*/
+    mmi_set_reminder_time();
 
     
 }

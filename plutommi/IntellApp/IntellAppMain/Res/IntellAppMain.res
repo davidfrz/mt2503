@@ -24,6 +24,8 @@
     <!-----消息资源-------->
     <SENDER id="EVT_ID_SRV_INTELLAPP_MSG_IND" hfile="IntellAppMain.h"/>
     <RECEIVER id="EVT_ID_SRV_INTELLAPP_MSG_IND" proc="mmi_intell_msg_proc"/>
+    <RECEIVER id="EVT_ID_SRV_REMINDER_NOTIFY" proc="mmi_intell_reminder_proc"/>
+
 
 	<!-----屏幕资源-------->
     <SCREEN ID="SCR_ID_HELLO_WORLD"/>
