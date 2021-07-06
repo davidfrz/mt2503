@@ -202,7 +202,8 @@ kal_uint32 const NVRAM_EF_CUST_HW_LEVEL_TBL_DEFAULT[] = {
                   200, 100 /* PMIC6318 PWM Level 5 */                  
 };
 
-#if (NVRAM_EF_LAST_LID_CUST - NVRAM_LID_CUST_BEGIN > 1)
+// #if (NVRAM_EF_LAST_LID_CUST - NVRAM_LID_CUST_BEGIN > 1)
+#if (NVRAM_EF_LAST_LID_CUST - NVRAM_LID_CUST_BEGIN > 1)||defined(__INTELL_MOB_TER_APP__)
 ltable_entry_struct logical_data_item_table_cust[] = 
 {
     {
@@ -215,14 +216,33 @@ ltable_entry_struct logical_data_item_table_cust[] =
         "CT00",
         VER(NVRAM_EF_PHONY_LID)
     },
+    #if defined(__INTELL_MOB_TER_APP__)/*定义NVRAM版本号*/
+    {
+        NVRAM_EF_INTELL_LID,
+        NVRAM_EF_INTELL_TOTAL,
+        NVRAM_EF_INTELL_SIZE,
+        NVRAM_NORMAL(NVRAM_EF_ZERO_DEFAULT),
+        NVRAM_CATEGORY_USER,
+        NVRAM_ATTR_AVERAGE|NVRAM_ATTR_FACTORY_RESET,
+        "MST0",
+        VER(NVRAM_EF_INTELL_LID)
+    },
+    #endif
     /* Watch out! There is no comma after last element! */
+    #if !defined(__INTELL_MOB_TER_APP__)
     { NVRAM_EF_RESERVED_LID }
+    #endif
 };
+
+#if defined(__INTELL_MOB_TER_APP__)
 
 nvram_ltable_tbl_struct nvram_ltable_cust = 
     {logical_data_item_table_cust,     sizeof(logical_data_item_table_cust)/sizeof(ltable_entry_struct)};
-
+#else
+nvram_ltable_tbl_struct nvram_ltable_cust = 
+    {logical_data_item_table_cust,     sizeof(logical_data_item_table_cust)/sizeof(ltable_entry_struct)};
 #endif
+
 
 #endif /*!NVRAM_NOT_PRESENT*/
 

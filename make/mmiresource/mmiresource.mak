@@ -357,6 +357,11 @@ ifneq ($(filter __LINE_IN_SUPPORT__, $(strip $(MODULE_DEFS))),)
 INC_DIR += plutommi\mtkapp\Linein\LineinInc
 endif
 
+# 为自己编写的模块添加路径
+ifneq ($(filter __INTELL_MOB_TER_APP__ , $(strip $(MODULE_DEFS))),)
+    INC_DIR += plutommi\IntellApp\IntellAppMain\Inc
+endif
+
 ifneq ($(filter __KARAOKE_SUPPORT__, $(strip $(MODULE_DEFS))),)
 INC_DIR += plutommi\mtkapp\Karaoke\KaraokeInc
 endif

@@ -127,6 +127,9 @@ typedef enum
     SRV_REMINDER_TYPE_LANGLN,           /* 12 language alarm */
     SRV_REMINDER_TYPE_DTV,              /* 13 */
     SRV_REMINDER_TYPE_SNS,              /* 14 */
+    #if defined(__INTELL_MOB_TER_APP__)
+    SRV_REMINDER_TYPE_INTELLAPP,
+    #endif
 	/* Add reminder type before this line */
 	SRV_REMINDER_TYPE_CUSTOM,           /* 15 */
 	SRV_REMINDER_TYPE_POWER_ON_CONFIRM, /* 16 For power on confirm after alarm power on */

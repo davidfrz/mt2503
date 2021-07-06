@@ -65,6 +65,9 @@
 * Option Value Definition                                                                     
 *****************************************************************************/
 #include "MMI_features_type.h"
+#if defined(__INTELL_MOB_TER_APP__)
+#include "MMI_features_switch_intell_app.h"
+#endif
 
 /*****************************************************************************
 * Switch Description

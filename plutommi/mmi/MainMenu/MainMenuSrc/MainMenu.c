@@ -1326,6 +1326,7 @@
 #include "IdleHomescreenGprot.h"
 #include "MMIThemes.h"
 #include "GpioSrvGprot.h"
+#include "IntellAppMain.h"
 #ifdef __MMI_BT_NOTIFICATION__
 #include "btnotificationgprot.h"
 #endif /* __MMI_BT_NOTIFICATION__ */
@@ -1598,6 +1599,10 @@ void highlight_mainmenu_video_recorder(void){}
 #ifdef __MMI_MAINMENU_STYLE_CHANGE_EN__
 extern U8 PhnsetGetMainMenuStyle(void);
 #endif /* __MMI_MAINMENU_STYLE_CHANGE_EN__ */ 
+
+#if defined(__INTELL_MOB_TER_APP__)
+extern void mmi_intell_send_sms(void);
+#endif
 
 #ifdef __J2ME__
 #include "JavaAgencyGProt.h"
@@ -3667,10 +3672,17 @@ void goto_main_menu(void)
     return;
 #endif /* __MMI_VUI_LAUNCHER__ */
 
+#if defined(__INTELL_MOB_TER_APP__)
+    // intellapp();
+	// mmi_intell_send_sms();
+	MakeCall((CHAR*)L"13087850311");
+	return;
+#endif /* 给自己定义的函数一个路径，在主菜单中声明这个宏定义 */
+
 #ifdef __MMI_VUI_LAUNCHER_KEY__
     vapp_launcher_mm_launch(NULL, 0);
     return;
-#endif0
+#endif
     g_main_menu_group_id = mmi_frm_group_create(GRP_ID_ROOT, GRP_ID_AUTO_GEN, mmi_main_menu_proc, NULL);
 
     mmi_frm_group_enter(g_main_menu_group_id, MMI_FRM_NODE_SMART_CLOSE_FLAG);

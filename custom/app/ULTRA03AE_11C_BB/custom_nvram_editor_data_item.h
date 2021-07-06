@@ -86,6 +86,9 @@
 
 /* Version numbers of data items */
 #define NVRAM_EF_PHONY_LID_VERNO      "000"
+#if defined(__INTELL_MOB_TER_APP__)/*定义你要用到的ram的版本号，每一次只要修改了NVRAM，必须修改版本号*/
+#define NVRAM_EF_INTELL_LID_VERNO     "000"
+#endif
 
 /* DO NOT MOVE OR REMOVE THIS HEADER */
 #ifndef __OPTR_NONE__

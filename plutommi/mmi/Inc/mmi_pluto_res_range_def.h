@@ -1970,6 +1970,14 @@ MMI_RES_DECLARE(APP_BTREMOTECAPTURE, 50, ".\\MMI\\BtRemoteCapture\\")
 #define BTRMTCAP_BASE_MAX                    ((U16) GET_RESOURCE_MAX(APP_BTREMOTECAPTURE))
 #endif/*__MMI_BT_REMOTE_CAPTURE__*/
 
+/****************************************************************************
+* intell_mob_ter  App (要在这里声明资源定义) 这里重新编译一定要用make resgen
+*****************************************************************************/
+#if defined(__INTELL_MOB_TER_APP__)
+MMI_RES_DECLARE(APP_INTELL,10,".\\IntellApp\\IntellAppMain\\Res\\")
+#define APP_INTELL_BASE                        ((U16) GET_RESOURCE_BASE(APP_INTELL))
+#define APP_INTELL_BASE_MAX                    ((U16) GET_RESOURCE_MAX(APP_INTELL))
+#endif
 
 /****************************************************************************
 * BLE Pxp  App
